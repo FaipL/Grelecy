@@ -1,0 +1,151 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: MPL-2.0; website prose: CC-BY-4.0 -->
+<html lang="$language">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07100d">
+  <meta name="description" content="$description">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GRELECY — Green Legacy Community">
+  <meta property="og:title" content="$page_title">
+  <meta property="og:description" content="$description">
+  <meta property="og:url" content="$canonical">
+  <meta property="og:image" content="$social_image">
+  <meta property="og:image:alt" content="GRELECY — Green Legacy Community. Old hardware. New possibilities.">
+  <title>$page_title</title>
+  <link rel="canonical" href="$canonical">
+  <link rel="alternate" hreflang="fr" href="$french_url">
+  <link rel="alternate" hreflang="en" href="$english_url">
+  <link rel="alternate" hreflang="x-default" href="$french_url">
+  <link rel="icon" type="image/png" href="$assets/brand/grelecy-logo.png">
+  <link rel="stylesheet" href="$assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">$skip_link</a>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="arrow" viewBox="0 0 24 24">
+      <path d="M4 12h15M13 5l7 7-7 7"/>
+    </symbol>
+    <symbol id="external" viewBox="0 0 24 24">
+      <path d="M14 4h6v6M20 4l-9 9M10 5H5a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1v-5"/>
+    </symbol>
+  </svg>
+
+  <header class="header container">
+    <a class="brand" href="$home" aria-label="$home_label">
+      <img src="$assets/brand/grelecy-logo.png" width="80" height="80" alt="">
+      <span>GRELECY</span>
+    </a>
+    <nav class="main-nav" aria-label="$nav_label">
+      <a href="#project">$nav_project</a>
+      <a href="#research">$nav_research</a>
+      <a href="#contribute">$nav_contribute</a>
+      <a class="mobile-github" href="https://github.com/FaipL/Grelecy">GitHub</a>
+    </nav>
+    <nav class="languages" aria-label="$languages_label">
+      <a href="$fr_href" lang="fr" hreflang="fr" aria-label="Version française" $fr_current>FR</a>
+      <span aria-hidden="true">/</span>
+      <a href="$en_href" lang="en" hreflang="en" aria-label="English version" $en_current>EN</a>
+    </nav>
+    <a class="desktop-github" href="https://github.com/FaipL/Grelecy">GitHub
+      <svg class="icon" aria-hidden="true"><use href="#external"/></svg>
+    </a>
+  </header>
+
+  <main id="main">
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title"><span>$hero_first</span><span class="accent">$hero_second</span></h1>
+        <p class="hero-intro">$hero_intro</p>
+        <div class="hero-actions">
+          <a class="button" href="https://github.com/FaipL/Grelecy/issues/new?template=01-join.yml">$join
+            <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg>
+          </a>
+          <a class="text-link" href="#project">$explore
+            <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg>
+          </a>
+        </div>
+      </div>
+      <img class="hero-logo" src="$assets/brand/grelecy-logo.png" width="1254" height="1254" alt="$logo_alt" fetchpriority="high">
+    </section>
+
+    <div class="stage container" role="note">
+      <p class="stage-title"><span class="status-dot" aria-hidden="true"></span>$stage_title</p>
+      <p>$stage_detail</p>
+    </div>
+
+    <section id="project" class="project container" aria-labelledby="project-title">
+      <h2 id="project-title">$project_first <span class="accent">$project_second</span></h2>
+      <div class="project-columns">
+        <div class="project-prose">
+          <p>$project_intro</p>
+          <p>$project_method</p>
+        </div>
+        <div class="scope" aria-labelledby="scope-title">
+          <h3 id="scope-title">$scope_title</h3>
+          <dl class="scope-list">
+            <div><dt><span class="number" aria-hidden="true">01</span>Kepler</dt><dd>GeForce GTX 600 / 700</dd></div>
+            <div><dt><span class="number" aria-hidden="true">02</span>Maxwell</dt><dd>GeForce GTX 900</dd></div>
+            <div><dt><span class="number" aria-hidden="true">03</span>Windows</dt><dd>$windows_detail</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="research" class="research" aria-labelledby="research-title">
+      <div class="container research-inner">
+        <h2 id="research-title">$research_title</h2>
+        <p>$research_intro</p>
+      </div>
+    </section>
+    <p class="scope-note container">$scope_note</p>
+
+    <section id="contribute" class="contribute container" aria-labelledby="contribute-title">
+      <h2 id="contribute-title">$contribute_title</h2>
+      <p class="contribute-intro">$contribute_intro</p>
+      <ol class="contribution-list">
+        <li>
+          <a href="https://github.com/FaipL/Grelecy/issues/new?template=01-join.yml">
+            <span class="number" aria-hidden="true">01</span>
+            <div><h3>$join</h3><p>$join_detail</p></div>
+            <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/FaipL/Grelecy/issues/new?template=02-compatibility.yml">
+            <span class="number" aria-hidden="true">02</span>
+            <div><h3>$report</h3><p>$report_detail</p></div>
+            <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/FaipL/Grelecy/issues/new?template=03-proposal.yml">
+            <span class="number" aria-hidden="true">03</span>
+            <div><h3>$propose</h3><p>$propose_detail</p></div>
+            <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg>
+          </a>
+        </li>
+      </ol>
+      <a class="guide-link" href="https://github.com/FaipL/Grelecy/blob/main/CONTRIBUTING.md">$guide
+        <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <div class="footer-top">
+      <a class="footer-brand" href="$home">GRELECY <span>Green Legacy Community</span></a>
+      <nav aria-label="$footer_nav_label">
+        <a href="https://github.com/FaipL/Grelecy">GitHub</a>
+        <a href="https://github.com/FaipL/Grelecy/blob/main/LICENSING.md">$licensing</a>
+        <a href="https://github.com/FaipL/Grelecy/blob/main/BRANDING.md">$brand_policy</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>$independence</p>
+      <p>$license_notice</p>
+    </div>
+  </footer>
+</body>
+</html>

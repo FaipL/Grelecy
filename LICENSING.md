@@ -18,7 +18,7 @@ The MPL uses file-level copyleft. When covered software is distributed, the appl
 
 No additional "Incompatible With Secondary Licenses" designation is applied by this repository. The presence of Exhibit B in the standard license text is not itself such a designation.
 
-There is no software source code in this initial community setup. This policy does not prescribe a license for all future GRELECY repositories or driver projects. Those projects must state their own terms before accepting contributions.
+The static website template, stylesheet, build/check scripts, and deployment workflow are software source under MPL-2.0. The original website prose and translations in `website/locales/` are documentation under CC-BY-4.0. This policy does not prescribe a license for all future GRELECY repositories or driver projects. Those projects must state their own terms before accepting contributions.
 
 ## Documentation: CC-BY-4.0
 

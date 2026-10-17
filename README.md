@@ -97,6 +97,10 @@ This repository is the starting point for GRELECY's public presentation, contrib
 
 Additional community channels will be linked here when they are available.
 
+### Project website
+
+The repository includes a static project website in French and English, using the existing GRELECY visual identity. See [the website guide](website/README.md) for editing, local preview, and GitHub Pages deployment.
+
 ## Independence and third-party software
 
 GRELECY is independent and is **not affiliated with, sponsored by, or endorsed by NVIDIA**. NVIDIA, GeForce, and other product names belong to their respective owners.
@@ -112,7 +116,7 @@ Our open-source licenses apply only to material we have the right to license. Th
 | GRELECY name, logos, and visual identity | Separate [brand policy](BRANDING.md) |
 | Third-party material | Its own applicable license and notices |
 
-See **[LICENSING.md](LICENSING.md)** for the exact scope, attribution guidance, and contribution rules. There is no software source code in this initial community setup. Licenses for future repositories or driver projects will be decided explicitly for those projects.
+See **[LICENSING.md](LICENSING.md)** for the exact scope, attribution guidance, and contribution rules. The software source currently consists of the static project website and its build tools. Licenses for future repositories or driver projects will be decided explicitly for those projects.
 
 ---
 
