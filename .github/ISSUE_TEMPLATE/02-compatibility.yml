@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: CC-BY-4.0
+name: Compatibility report
+description: Document a reproducible issue involving an older GPU on Windows.
+title: "[Compatibility] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        GRELECY is gathering evidence; this form does not imply that a fix is available.
+        Search existing reports first. Remove personal information from logs and screenshots.
+  - type: input
+    id: gpu
+    attributes:
+      label: Exact GPU model and variant
+      description: Include desktop or laptop and architecture if known. Do not infer architecture from series branding alone.
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version and build
+      description: Include edition and build where available.
+    validations:
+      required: true
+  - type: input
+    id: driver
+    attributes:
+      label: Driver version and source
+      description: State the exact version, download source, and whether it is modified.
+    validations:
+      required: true
+  - type: input
+    id: application
+    attributes:
+      label: Affected application or component and version
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Give numbered steps and relevant settings.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Actual behavior and evidence
+      description: Include error messages, sanitized logs, or screenshots. Separate observations from explanations.
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: Comparisons, references, and workarounds
+      description: Other tested drivers, Windows builds, GPUs, existing reports, or workarounds. Say what has not been tested.

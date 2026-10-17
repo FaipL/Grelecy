@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: CC-BY-4.0
+name: Join the community
+description: Introduce yourself, share your hardware, and tell us how you would like to help.
+title: "[Community] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Welcome to GRELECY! You do not need to be a developer to join.
+        This issue is public. Share only information you are comfortable publishing.
+  - type: textarea
+    id: introduction
+    attributes:
+      label: Your interests
+      description: What interests you about keeping older graphics hardware useful?
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware and Windows setup
+      description: Exact GPU model, desktop or laptop, architecture if known, Windows build, and driver version. You can also join without owning a target GPU.
+    validations:
+      required: false
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: How would you like to help?
+      options:
+        - label: Hardware testing and reproduction
+        - label: C/C++ development or diagnostic tooling
+        - label: Windows drivers or graphics APIs
+        - label: GPU architecture or reverse-engineering research
+        - label: Documentation or translation
+        - label: Community organization
+        - label: Learning and following the project
+  - type: textarea
+    id: experience
+    attributes:
+      label: Experience and other ways to help
+      description: Optional skills, relevant public work, ideas, or availability. No commitment is required.
