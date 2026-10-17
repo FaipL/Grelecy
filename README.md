@@ -2,8 +2,7 @@
 
 <div align="center">
 
-# GRELECY
-### Green Legacy Community
+<img src="assets/brand/grelecy-banner.png" alt="GRELECY — Green Legacy Community. Old hardware. New possibilities." width="1040">
 
 **Exploring a future for legacy graphics hardware.**
 

@@ -14,7 +14,17 @@ A fork or independent service should use its own primary name and clearly explai
 
 ## Logos and visual identity
 
-The selected design direction is **Hardware Legacy**, with an emblem inspired by a graphics card and the letter G. Final logo files are not included in this initial repository setup.
+The selected design direction is **Hardware Legacy**, with an emblem inspired by a graphics card and the letter G. The repository uses the graphics-card G emblem and a matching hardware-inspired banner.
+
+<p align="center">
+  <img src="assets/brand/grelecy-logo.png" alt="GRELECY graphics-card G emblem" width="220">
+</p>
+
+- [Transparent logo PNG](assets/brand/grelecy-logo.png)
+- [Repository banner PNG](assets/brand/grelecy-banner.png)
+- [Asset formats and usage notes](assets/brand/README.md)
+
+Keep the emblem proportional, preserve clear space, and use a background that keeps the green PCB, silver G, and gold contacts readable. The banner is used at the top of the repository README. These assets follow the selected Hardware Legacy direction.
 
 Unless an asset carries an explicit separate permission notice, rights in GRELECY logo artwork and visual assets are reserved by their respective rights holders. They are not included in the repository's MPL-2.0 or CC-BY-4.0 grants.
 
