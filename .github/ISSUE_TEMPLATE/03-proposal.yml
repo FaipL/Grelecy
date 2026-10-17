@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: CC-BY-4.0
+name: Research proposal
+description: Suggest a bounded research question or a possible first technical objective.
+title: "[Research] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help the community evaluate a concrete question. A proposal is not a delivery commitment.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or research question
+      description: What do you want to understand or improve, and who would benefit?
+    validations:
+      required: true
+  - type: textarea
+    id: existing
+    attributes:
+      label: Existing work and references
+      description: Link relevant projects, documentation, or reports. State what is established and what remains uncertain.
+    validations:
+      required: true
+  - type: textarea
+    id: experiment
+    attributes:
+      label: Proposed first experiment
+      description: Describe a limited investigation, required hardware and skills, and how its outcome could be evaluated.
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Dependencies and constraints
+      description: Consider third-party rights, technical dependencies, distribution, and maintenance. Unknowns are welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: participation
+    attributes:
+      label: How you could contribute
+      description: Optional experience, hardware, or time you could bring.
