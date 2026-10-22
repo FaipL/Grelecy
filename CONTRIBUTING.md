@@ -4,6 +4,10 @@
 
 GRELECY is forming its community. Our most useful early contributions are hardware information, reproducible problems, research, and clear documentation. You do not need development experience to take part.
 
+## Initial community scope
+
+Owners, testers, and developers interested in **Kepler, Maxwell, or Pascal** GPUs on Windows are welcome from the start. Initial examples include Kepler-based GTX 600/700, Maxwell-based GTX 900, and Pascal-based GeForce GTX 10 series cards. Report the exact model, desktop or laptop variant, and architecture where known. No generation has a predetermined implementation priority or guaranteed support. See [Project scope](docs/PROJECT_SCOPE.md).
+
 ## Choose a starting point
 
 - [Introduce yourself and your hardware](https://github.com/FaipL/Grelecy/issues/new?template=01-join.yml).
@@ -80,3 +84,4 @@ Maintainers may moderate contributions and restrict participation to keep this r
 ## Initial maintenance
 
 [FaipL](https://github.com/FaipL) maintains this repository during community formation. Proposals and technical priorities are open to community discussion; the maintainer handles merge and repository decisions at this stage.
+

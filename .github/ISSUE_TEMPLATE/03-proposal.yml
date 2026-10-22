@@ -6,7 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Help the community evaluate a concrete question. A proposal is not a delivery commitment.
+        Help the community evaluate a concrete question about Kepler, Maxwell, or Pascal GPUs on Windows.
+        All three generations are in the initial community scope; technical priorities will be chosen together.
+        A proposal is not a delivery commitment.
   - type: textarea
     id: problem
     attributes:
@@ -40,3 +42,4 @@ body:
     attributes:
       label: How you could contribute
       description: Optional experience, hardware, or time you could bring.
+

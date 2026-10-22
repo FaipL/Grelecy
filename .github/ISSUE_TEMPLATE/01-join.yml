@@ -6,7 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Welcome to GRELECY! You do not need to be a developer to join.
+        Welcome to GRELECY! Kepler, Maxwell, and Pascal GPU owners are welcome from the start.
+        Initial examples include Kepler GTX 600/700, Maxwell GTX 900, and Pascal GeForce GTX 10 series cards.
+        You do not need to be a developer or own one of these cards to join.
         This issue is public. Share only information you are comfortable publishing.
   - type: textarea
     id: introduction
@@ -39,3 +41,4 @@ body:
     attributes:
       label: Experience and other ways to help
       description: Optional skills, relevant public work, ideas, or availability. No commitment is required.
+

@@ -4,6 +4,10 @@
 
 A static, bilingual presentation of GRELECY. French is at the site root and English at `en/`. Both are complete HTML pages: navigation and language selection work without JavaScript. There are no third-party runtime requests, cookies, analytics, package dependencies, or backend services. Inter v4.1 is served locally with its SIL Open Font License in `fonts/LICENSE.txt`.
 
+## Community scope
+
+The site presents **Kepler, Maxwell, and Pascal** as the initial community scope on Windows, including Pascal-based GeForce GTX 10 series cards. Keep the shared scope list, both translations, and the [project brief](../docs/PROJECT_SCOPE.md) consistent. The list does not define a technical implementation order or guarantee support.
+
 ## Edit and preview
 
 From the repository root, with Python 3.12:
@@ -32,3 +36,4 @@ For a future custom domain, pass its HTTPS base URL to `scripts/build_site.py --
 ## Licensing
 
 Website template, stylesheet, build/check scripts and deployment workflow: MPL-2.0. Original prose and translations: CC BY 4.0, adapted from the GRELECY contributors' project documentation. Logo and banner artwork retain their separate brand terms. See [LICENSING.md](../LICENSING.md) and [BRANDING.md](../BRANDING.md).
+
