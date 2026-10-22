@@ -6,7 +6,7 @@
 
 **Exploring a future for legacy graphics hardware.**
 
-An independent community bringing together GPU owners, enthusiasts, testers, and developers to explore how older graphics cards can remain useful on Windows.
+An independent community bringing together GPU owners, enthusiasts, testers, and developers to explore how older graphics cards can remain useful on Windows, starting with NVIDIA Kepler, Maxwell, and Pascal GPUs.
 
 [Get involved](https://github.com/FaipL/Grelecy/issues/new?template=01-join.yml) · [Share a compatibility issue](https://github.com/FaipL/Grelecy/issues/new?template=02-compatibility.yml) · [Contributing guide](CONTRIBUTING.md)
 
@@ -29,14 +29,18 @@ GRELECY aims to bring that knowledge and those people together. Our starting poi
 | Area | Starting scope |
 | --- | --- |
 | Hardware | Older NVIDIA GeForce graphics cards |
-| Priority architectures | Kepler-based models in the GTX 600/700 families and Maxwell-based GTX 900 models |
+| Initial architectures | Kepler-based models in the GTX 600/700 families, Maxwell-based GTX 900 models, and Pascal-based GeForce GTX 10 series models |
 | Operating system | Windows; exact version and build recorded for each report |
 | First work | Gather volunteers, inventory available hardware, document problems, and assess feasibility |
 | Technical commitments | To be agreed after reviewing evidence and available contributor skills |
 
 **A product series is not an architecture.** GTX 600/700 branding includes models outside Kepler. Please identify the exact card, desktop or laptop variant, and architecture where known. A model's presence in the starting scope is an invitation to contribute evidence, not a guarantee of support.
 
-Other GPUs can provide useful comparisons, but expanding the priority scope will be discussed with the community.
+**Kepler, Maxwell, and Pascal are all part of the initial community scope.** Pascal owners are welcome from the start, including GTX 1050 / 1050 Ti, GTX 1060, GTX 1070 / 1070 Ti, and GTX 1080 / 1080 Ti owners. These examples are not an exhaustive hardware whitelist. Desktop and laptop variants can be reported with their exact model and architecture.
+
+This recruitment scope does not set an implementation order or promise a driver for each generation. The community will choose technical priorities from the evidence, hardware, and skills available. Other GPUs can provide useful comparisons; further scope changes will be discussed with contributors.
+
+See [Project scope](docs/PROJECT_SCOPE.md) for the current brief and [Public recruitment texts](docs/RECRUITMENT.md) for the English and French presentation drafts.
 
 ## What we could explore together
 
@@ -126,3 +130,4 @@ See **[LICENSING.md](LICENSING.md)** for the exact scope, attribution guidance, 
 Shared knowledge. Collaborative research. Longer hardware life.
 
 </div>
+

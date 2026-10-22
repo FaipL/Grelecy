@@ -6,7 +6,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        GRELECY is gathering evidence; this form does not imply that a fix is available.
+        GRELECY is gathering evidence for Kepler, Maxwell, and Pascal GPUs on Windows.
+        Pascal GeForce GTX 10 series reports are part of the initial scope.
+        This form does not imply that a fix is available.
         Search existing reports first. Remove personal information from logs and screenshots.
   - type: input
     id: gpu
@@ -60,3 +62,4 @@ body:
     attributes:
       label: Comparisons, references, and workarounds
       description: Other tested drivers, Windows builds, GPUs, existing reports, or workarounds. Say what has not been tested.
+
