@@ -1,0 +1,22 @@
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyName>GRELECY-Diagnostics</AssemblyName>
+    <Version>0.1.0-preview.1</Version>
+    <Product>GRELECY Diagnostics</Product>
+    <Description>Local configuration reports for the GRELECY community</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Grelecy.Diagnostics.Core/Grelecy.Diagnostics.Core.csproj" />
+    <PackageReference Include="System.Management" Version="10.0.13" />
+  </ItemGroup>
+</Project>

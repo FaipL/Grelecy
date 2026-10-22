@@ -105,6 +105,10 @@ Additional community channels will be linked here when they are available.
 
 The repository includes a static project website in French and English, using the existing GRELECY visual identity. See [the website guide](website/README.md) for editing, local preview, and GitHub Pages deployment.
 
+### Windows configuration reporter (prototype)
+
+An experimental desktop application helps participants prepare a local configuration report through a French/English graphical interface. It reads Windows and graphics-card information, lets users choose the sections to share, and saves or copies a report. It does not install drivers, upload reports automatically, or test compatibility. See [the user guide and development instructions](docs/DIAGNOSTICS.md). Real-PC acceptance testing is still required before treating this prototype as a stable release.
+
 ## Independence and third-party software
 
 GRELECY is independent and is **not affiliated with, sponsored by, or endorsed by NVIDIA**. NVIDIA, GeForce, and other product names belong to their respective owners.
@@ -120,7 +124,7 @@ Our open-source licenses apply only to material we have the right to license. Th
 | GRELECY name, logos, and visual identity | Separate [brand policy](BRANDING.md) |
 | Third-party material | Its own applicable license and notices |
 
-See **[LICENSING.md](LICENSING.md)** for the exact scope, attribution guidance, and contribution rules. The software source currently consists of the static project website and its build tools. Licenses for future repositories or driver projects will be decided explicitly for those projects.
+See **[LICENSING.md](LICENSING.md)** for the exact scope, attribution guidance, and contribution rules. The software source currently consists of the static project website, its build tools and the experimental Windows configuration reporter. Licenses for future repositories or driver projects will be decided explicitly for those projects.
 
 ---
 

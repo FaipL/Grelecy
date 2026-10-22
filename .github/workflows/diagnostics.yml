@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: MPL-2.0
+name: Windows diagnostics
+
+on:
+  push:
+    branches: [main, 'codex/windows-gui-diagnostics']
+    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', '.github/workflows/diagnostics.yml']
+  pull_request:
+    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', '.github/workflows/diagnostics.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reports:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Verify report content and privacy filters
+        run: dotnet run --project tests/Grelecy.Diagnostics.Tests --configuration Release
+
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify the graphical workflow and local Windows collection
+        run: dotnet run --project tests/Grelecy.Diagnostics.Windows.SmokeTests --configuration Release -- --live-collector --screenshots artifacts/ui-smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Windows-UI-smoke-screenshots
+          path: artifacts/ui-smoke/*.png
+          if-no-files-found: ignore
+      - name: Package the portable Windows application
+        run: python scripts/package_diagnostics.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GRELECY-Diagnostics-win-x64
+          path: |
+            artifacts/GRELECY-Diagnostics-win-x64.zip
+            artifacts/GRELECY-Diagnostics-win-x64.zip.sha256
+          if-no-files-found: error
