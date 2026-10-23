@@ -61,7 +61,7 @@ internal static class GuidedText
         ["save"] = ("&Enregistrer…", "&Save…"),
         ["copy"] = ("&Copier le rapport", "&Copy the report"),
         ["openIssue"] = ("Ouvrir le &formulaire GitHub", "Open the GitHub for&m"),
-        ["sharing"] = ("Le partage est manuel : copiez le rapport puis collez-le dans le formulaire GitHub, ou enregistrez-le. Publier sur GitHub nécessite un compte et rend le contenu public. Vous pouvez fermer cette fenêtre sans publier.", "Sharing is manual: copy the report, then paste it into the GitHub form, or save it. Posting on GitHub requires an account and makes the content public. You can close this window without publishing."),
+        ["sharing"] = ("Copiez le rapport puis collez-le dans le formulaire GitHub. La publication est publique et nécessite un compte. Rien n’est envoyé automatiquement.", "Copy the report, then paste it into the GitHub form. Posting is public and requires an account. Nothing is sent automatically."),
         ["copied"] = ("Rapport copié. Vous pouvez maintenant le coller dans le formulaire GitHub ou un autre message.", "Report copied. You can now paste it into the GitHub form or another message."),
         ["saved"] = ("Rapport enregistré dans le fichier choisi.", "Report saved to the selected file."),
         ["updated"] = ("Rapport modifié : copiez ou enregistrez cette version. Les copies précédentes gardent leur ancien contenu.", "Report changed: copy or save this version. Previous copies keep their old content."),
