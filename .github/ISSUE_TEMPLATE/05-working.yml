@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: CC-BY-4.0
+name: Share a successful test
+description: Share what worked in a particular game or application and configuration.
+title: "[Working test] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        In GRELECY, choose **Share a successful test**, then **Copy the report** and paste it below.
+        You may also describe your test directly. Say what you actually tried, including any limits or untested areas.
+        A successful test is evidence for the scenario described, not a general compatibility guarantee.
+        This is public. Remove personal information before posting. French and English are welcome.
+  - type: textarea
+    id: report
+    attributes:
+      label: Test report / Rapport d'essai
+      description: Include the application, what you successfully tried, and the duration/settings/configuration if known.
+      placeholder: Paste your prepared report here, or describe what worked.
+    validations:
+      required: true

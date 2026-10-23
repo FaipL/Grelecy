@@ -1,0 +1,158 @@
+# SPDX-License-Identifier: MPL-2.0
+name: Windows diagnostics
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', 'docs/releases/**', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
+  pull_request:
+    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', 'docs/releases/**', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
+  workflow_dispatch:
+    inputs:
+      publish_preview:
+        description: Publish a public preview release from main after all checks pass
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: diagnostics-${{ inputs.publish_preview && 'release' || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ !inputs.publish_preview }}
+
+jobs:
+  reports:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Verify report content and privacy filters
+        run: dotnet run --project tests/Grelecy.Diagnostics.Tests --configuration Release
+
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify the graphical workflow and local Windows collection
+        run: dotnet run --project tests/Grelecy.Diagnostics.Windows.SmokeTests --configuration Release -- --live-collector --screenshots artifacts/ui-smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Windows-UI-smoke-screenshots
+          path: artifacts/ui-smoke/*.png
+          if-no-files-found: ignore
+      - name: Package the portable Windows application
+        run: python scripts/package_diagnostics.py
+      - name: Open and close the packaged Windows executable
+        shell: pwsh
+        run: |
+          $programPath = (Resolve-Path artifacts/publish/win-x64/GRELECY-Diagnostics.exe).Path
+          $program = [System.Diagnostics.Process]::new()
+          $program.StartInfo = [System.Diagnostics.ProcessStartInfo]::new($programPath)
+          $program.StartInfo.UseShellExecute = $false
+          $phase = 'launch'
+          function Fail-ApplicationCheck([string]$message) {
+            Write-Host "::error title=Packaged Windows application::$message"
+            throw $message
+          }
+          try {
+            if (-not $program.Start()) { Fail-ApplicationCheck 'The packaged process could not be started.' }
+            $phase = 'window'
+            $startup = [System.Diagnostics.Stopwatch]::StartNew()
+            do {
+              $program.Refresh()
+              if ($program.HasExited) { Fail-ApplicationCheck "The packaged application exited before opening its window (code $($program.ExitCode))." }
+              if ($program.MainWindowHandle -ne 0) { break }
+              Start-Sleep -Milliseconds 100
+            } while ($startup.Elapsed.TotalSeconds -lt 30)
+            if ($program.MainWindowHandle -eq 0) { Fail-ApplicationCheck 'The packaged application did not open a window within 30 seconds.' }
+            $phase = 'ready'
+            if (-not $program.WaitForInputIdle(10000)) { Fail-ApplicationCheck 'The packaged window did not become ready.' }
+            $phase = 'close'
+            if (-not $program.CloseMainWindow()) { Fail-ApplicationCheck 'The packaged window could not be closed normally.' }
+            if (-not $program.WaitForExit(5000)) { Fail-ApplicationCheck 'The packaged application did not exit after closing its window.' }
+            if ($program.ExitCode -ne 0) { Fail-ApplicationCheck "The packaged application exited with code $($program.ExitCode)." }
+          } catch {
+            Write-Host "::error title=Packaged Windows application::$phase failed ($($_.Exception.GetType().Name))."
+            throw
+          } finally {
+            if ($program.Id -and -not $program.HasExited) { $program.Kill() }
+            $program.Dispose()
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GRELECY-Diagnostics-win-x64
+          path: |
+            artifacts/GRELECY-Diagnostics-*-win-x64.zip
+            artifacts/GRELECY-Diagnostics-*-win-x64.zip.sha256
+          if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_preview && github.ref == 'refs/heads/main'
+    needs: [reports, windows]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: GRELECY-Diagnostics-win-x64
+          path: artifacts
+      - name: Publish the verified preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_version=$(python3 -c 'from xml.etree import ElementTree; print(ElementTree.parse("src/Grelecy.Diagnostics.Windows/Grelecy.Diagnostics.Windows.csproj").findtext(".//Version"))')
+          if [[ ! "$release_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+-preview\.[0-9]+$ ]]; then
+            echo '::error::Only an explicitly versioned preview can be published by this workflow.'
+            exit 1
+          fi
+          release_tag="v$release_version"
+          archive_name="GRELECY-Diagnostics-$release_version-win-x64.zip"
+          test -s "docs/releases/$release_version.md"
+          (cd artifacts && sha256sum --check "$archive_name.sha256")
+          if gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" >/dev/null 2>&1; then
+            echo '::error::This release or tag already exists. Existing versions are not overwritten.'
+            exit 1
+          fi
+          gh release create "$release_tag" "artifacts/$archive_name" "artifacts/$archive_name.sha256" \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "GRELECY Diagnostics $release_version" --notes-file "docs/releases/$release_version.md" \
+            --draft --prerelease --latest=false
+          gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" --json assets > artifacts/release-assets.json
+          python3 - "$release_version" <<'PY'
+          import json, sys
+          from pathlib import Path
+          version = sys.argv[1]
+          expected = {f"GRELECY-Diagnostics-{version}-win-x64.zip", f"GRELECY-Diagnostics-{version}-win-x64.zip.sha256"}
+          assets = json.loads(Path("artifacts/release-assets.json").read_text())["assets"]
+          if {asset["name"] for asset in assets} != expected:
+              raise SystemExit("The preview must have exactly its archive and checksum attached")
+          for asset in assets:
+              if asset["size"] != (Path("artifacts") / asset["name"]).stat().st_size:
+                  raise SystemExit("Uploaded asset size does not match the verified local file")
+          print("Both preview assets are attached with matching sizes")
+          PY
+          gh release edit "$release_tag" --repo "$GITHUB_REPOSITORY" --draft=false --prerelease --latest=false

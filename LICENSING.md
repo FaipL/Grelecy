@@ -18,7 +18,7 @@ The MPL uses file-level copyleft. When covered software is distributed, the appl
 
 No additional "Incompatible With Secondary Licenses" designation is applied by this repository. The presence of Exhibit B in the standard license text is not itself such a designation.
 
-The static website template, stylesheet, build/check scripts, and deployment workflow are software source under MPL-2.0. The original website prose and translations in `website/locales/` are documentation under CC-BY-4.0. This policy does not prescribe a license for all future GRELECY repositories or driver projects. Those projects must state their own terms before accepting contributions.
+The static website template, stylesheet, build/check scripts, deployment workflows, Windows configuration reporter (including its interface strings), and its tests are software source under MPL-2.0. The original website prose and translations in `website/locales/` are documentation under CC-BY-4.0. This policy does not prescribe a license for all future GRELECY repositories or driver projects. Those projects must state their own terms before accepting contributions.
 
 ## Documentation: CC-BY-4.0
 
@@ -45,6 +45,8 @@ See [BRANDING.md](BRANDING.md) for identification, attribution, and permission r
 Third-party code, drivers, firmware, documentation, and assets remain subject to their own rights and terms. Neither MPL-2.0 nor CC-BY-4.0 grants rights GRELECY contributors do not hold.
 
 Keep third-party license notices intact and identify the upstream source, version, and applicable license whenever third-party material is accepted. Link to upstream downloads when redistribution rights have not been established.
+
+Portable Windows reporter packages include Microsoft .NET runtime components and System.Management under their respective Microsoft/.NET license notices. The packaging script copies those notices from the restored packages into `third-party-notices/`; these components are not relicensed under MPL-2.0.
 
 ## Contributions
 
