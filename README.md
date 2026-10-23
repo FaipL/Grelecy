@@ -109,6 +109,8 @@ The repository includes a static project website in French and English, using th
 
 An experimental desktop application helps participants **report a problem** or **share a successful test** through a French/English guided interface. It asks simple questions about the application and observed result, optionally adds local Windows/GPU information, and lets users review, copy or save the report. Unknown versions and unavailable hardware information do not prevent participation. It does not install drivers, upload reports automatically, or test compatibility itself. A working-test report applies only to the scenario described. See [the user guide and development instructions](docs/DIAGNOSTICS.md). Real-PC acceptance testing is still required before treating this prototype as a stable release.
 
+[Download the Windows x64 preview](https://github.com/FaipL/Grelecy/releases/tag/v0.2.0-preview.1) · [Preview release notes](docs/releases/0.2.0-preview.1.md)
+
 ## Independence and third-party software
 
 GRELECY is independent and is **not affiliated with, sponsored by, or endorsed by NVIDIA**. NVIDIA, GeForce, and other product names belong to their respective owners.
