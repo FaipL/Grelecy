@@ -89,7 +89,7 @@ public sealed class GuidedReportForm : Form
         header.Controls.Add(languages, 1, 0);
         root.Controls.Add(header, 0, 0);
         root.Controls.Add(stepLabel, 0, 1);
-        var host = new Panel { Dock = DockStyle.Fill };
+        var host = new Panel { Dock = DockStyle.Fill, MinimumSize = new Size(100, 200) };
         for (var index = 0; index < pages.Length; index++)
         {
             pages[index] = new Panel { Dock = DockStyle.Fill, AutoScroll = true, Visible = index == 0 };
@@ -126,9 +126,13 @@ public sealed class GuidedReportForm : Form
         AddField(detail, kind == ObservationKind.Problem ? "workarounds" : "limitations", limitations);
         detail.Controls.Add(LabelFor("textHelp", "textHelp"));
         pages[1].Controls.Add(detail);
-        var review = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 4 };
+        var review = new TableLayoutPanel
+        {
+            Dock = DockStyle.Top, ColumnCount = 1, RowCount = 4,
+            AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+        };
         review.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        for (var row = 0; row < 4; row++) review.RowStyles.Add(new RowStyle(row == 3 ? SizeType.Percent : SizeType.AutoSize, row == 3 ? 100 : 0));
+        for (var row = 0; row < 4; row++) review.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         review.Controls.Add(LabelFor("autoOptions", "autoOptions"), 0, 0);
         var choices = Flow();
         choices.Controls.AddRange([includeWindows, includeGraphics, includeIds]);
@@ -137,15 +141,12 @@ public sealed class GuidedReportForm : Form
         readRow.Controls.Add(readConfiguration);
         readRow.Controls.Add(LabelFor("manualIncluded", "manualIncluded"));
         review.Controls.Add(readRow, 0, 2);
+        preview.Dock = DockStyle.Top;
+        preview.Height = 220;
         review.Controls.Add(preview, 0, 3);
         pages[2].Controls.Add(review);
-        // The page scrolls over the whole review when its headers and a readable preview
-        // cannot fit. Dock=Fill alone would otherwise clip a child in a short window.
-        review.Layout += (_, _) =>
-        {
-            var minimum = review.GetRowHeights().Take(3).Sum() + preview.MinimumSize.Height + preview.Margin.Vertical;
-            if (review.MinimumSize.Height != minimum) review.MinimumSize = new Size(0, minimum);
-        };
+        // A top-docked, auto-sized child exposes its full extent to the page's scrolling.
+        // A fill-docked child would keep the page-sized bounds and clip the lower preview.
 
         Bind(next, "next"); Bind(back, "back"); Bind(save, "save"); Bind(copy, "copy");
         Bind(openIssue, "openIssue"); Bind(includeWindows, "includeWindows");

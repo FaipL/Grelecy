@@ -317,7 +317,8 @@ internal static class Program
         var visiblePreview = Rectangle.Intersect(preview.RectangleToScreen(preview.ClientRectangle),
             scrollPage.RectangleToScreen(scrollPage.ClientRectangle));
         Check(preview.Height >= 140 && visiblePreview.Width > 100 && visiblePreview.Height >= 100,
-            prefix + ": the report remains readable and reachable in a 640 by 590 window");
+            prefix + ": the report remains readable and reachable in a 640 by 590 window (preview "
+                + preview.Size + ", visible " + visiblePreview.Size + ", page " + scrollPage.ClientSize + ")");
         var visibleWindow = guided.RectangleToScreen(guided.ClientRectangle);
         Check(visibleWindow.Contains(copy.RectangleToScreen(copy.ClientRectangle)) &&
             visibleWindow.Contains(openIssue.RectangleToScreen(openIssue.ClientRectangle)),
