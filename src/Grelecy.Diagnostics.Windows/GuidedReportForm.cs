@@ -236,10 +236,10 @@ public sealed class GuidedReportForm : Form
         category.SelectedIndex = selectedCategory;
         if (testedGpu.Items.Count > 0)
         {
-            var unspecified = testedGpu.SelectedIndex == 0;
-            var previous = testedGpu.Text;
+            var previous = GpuDescription();
             testedGpu.Items[0] = T("unspecified");
-            if (unspecified) testedGpu.SelectedIndex = 0;
+            testedGpu.SelectedIndex = -1;
+            if (previous.Length == 0) testedGpu.SelectedIndex = 0;
             else testedGpu.Text = previous;
         }
         foreach (var field in new[] { software, version, steps, expected, observed, duration, settings, limitations })
@@ -259,17 +259,23 @@ public sealed class GuidedReportForm : Form
 
     private void PopulateGpuChoices()
     {
-        var previous = testedGpu.SelectedIndex == 0 ? "" : testedGpu.Text;
+        var previous = GpuDescription();
         testedGpu.Items.Clear();
         testedGpu.Items.Add(T("unspecified"));
         if (configuration is not null)
             foreach (var name in configuration.Graphics.Select(g => g.Name).Where(name => name.Length > 0).Distinct()) testedGpu.Items.Add(name);
+        testedGpu.SelectedIndex = -1;
         if (previous.Length == 0) testedGpu.SelectedIndex = 0;
         else testedGpu.Text = previous;
     }
 
+    // Editable ComboBox.Text can differ from Items[SelectedIndex]. Preserve the typed value.
+    private string GpuDescription() => testedGpu.Items.Count > 0 &&
+        testedGpu.Text.Equals(testedGpu.GetItemText(testedGpu.Items[0]), StringComparison.Ordinal)
+        ? "" : testedGpu.Text;
+
     private UserObservation Observation() => new(kind, software.Text, version.Text,
-        testedGpu.SelectedIndex == 0 ? "" : testedGpu.Text,
+        GpuDescription(),
         (ProblemCategory)Math.Max(0, category.SelectedIndex), steps.Text, expected.Text,
         observed.Text, duration.Text, settings.Text, limitations.Text);
     private ObservationReport Report() => new(createdAt, Observation(), configuration);
