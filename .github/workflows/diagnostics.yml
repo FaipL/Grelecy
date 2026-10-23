@@ -4,17 +4,23 @@ name: Windows diagnostics
 on:
   push:
     branches: [main]
-    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
+    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', 'docs/releases/**', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
   pull_request:
-    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
+    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', 'docs/releases/**', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
   workflow_dispatch:
+    inputs:
+      publish_preview:
+        description: Publish a public preview release from main after all checks pass
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: diagnostics-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: diagnostics-${{ inputs.publish_preview && 'release' || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ !inputs.publish_preview }}
 
 jobs:
   reports:
@@ -96,3 +102,57 @@ jobs:
             artifacts/GRELECY-Diagnostics-*-win-x64.zip
             artifacts/GRELECY-Diagnostics-*-win-x64.zip.sha256
           if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_preview && github.ref == 'refs/heads/main'
+    needs: [reports, windows]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: GRELECY-Diagnostics-win-x64
+          path: artifacts
+      - name: Publish the verified preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_version=$(python3 -c 'from xml.etree import ElementTree; print(ElementTree.parse("src/Grelecy.Diagnostics.Windows/Grelecy.Diagnostics.Windows.csproj").findtext(".//Version"))')
+          if [[ ! "$release_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+-preview\.[0-9]+$ ]]; then
+            echo '::error::Only an explicitly versioned preview can be published by this workflow.'
+            exit 1
+          fi
+          release_tag="v$release_version"
+          archive_name="GRELECY-Diagnostics-$release_version-win-x64.zip"
+          test -s "docs/releases/$release_version.md"
+          (cd artifacts && sha256sum --check "$archive_name.sha256")
+          if gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" >/dev/null 2>&1; then
+            echo '::error::This release or tag already exists. Existing versions are not overwritten.'
+            exit 1
+          fi
+          gh release create "$release_tag" "artifacts/$archive_name" "artifacts/$archive_name.sha256" \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "GRELECY Diagnostics $release_version" --notes-file "docs/releases/$release_version.md" \
+            --draft --prerelease --latest=false
+          gh release view "$release_tag" --repo "$GITHUB_REPOSITORY" --json assets > artifacts/release-assets.json
+          python3 - "$release_version" <<'PY'
+          import json, sys
+          from pathlib import Path
+          version = sys.argv[1]
+          expected = {f"GRELECY-Diagnostics-{version}-win-x64.zip", f"GRELECY-Diagnostics-{version}-win-x64.zip.sha256"}
+          assets = json.loads(Path("artifacts/release-assets.json").read_text())["assets"]
+          if {asset["name"] for asset in assets} != expected:
+              raise SystemExit("The preview must have exactly its archive and checksum attached")
+          for asset in assets:
+              if asset["size"] != (Path("artifacts") / asset["name"]).stat().st_size:
+                  raise SystemExit("Uploaded asset size does not match the verified local file")
+          print("Both preview assets are attached with matching sizes")
+          PY
+          gh release edit "$release_tag" --repo "$GITHUB_REPOSITORY" --draft=false --prerelease --latest=false

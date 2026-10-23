@@ -8,7 +8,7 @@ Une application Windows avec interface graphique pour partager un problème, un 
 
 ### Démarrer
 
-1. Télécharger l'archive **GRELECY-Diagnostics-0.2.0-preview.1-win-x64.zip** jointe à une construction du workflow **Windows diagnostics** et extraire son contenu dans un dossier.
+1. Télécharger l'archive **GRELECY-Diagnostics-0.2.0-preview.1-win-x64.zip** depuis [la version d'essai GitHub](https://github.com/FaipL/Grelecy/releases/tag/v0.2.0-preview.1) et extraire son contenu dans un dossier.
 2. Ouvrir **GRELECY-Diagnostics.exe** par double-clic. Le runtime .NET est inclus ; aucune installation de .NET n'est nécessaire.
 3. Choisir **Signaler un problème**, **Partager un résultat qui fonctionne**, ou **Lire ma configuration** pour un relevé seul.
 4. Dans les parcours guidés, indiquer le logiciel, puis raconter l'essai. Sa version et la carte utilisée peuvent rester inconnues. La carte n'est jamais choisie automatiquement parmi les GPU détectés.
@@ -42,7 +42,7 @@ Les tests automatisés vérifient le format, le filtrage des données et les par
 
 GRELECY Diagnostics is a graphical Windows prototype for preparing a problem report, a successful-test report or a local configuration report. It works without a terminal, administrator rights, a .NET installation or an account. French and English are available in the same application.
 
-1. Download **GRELECY-Diagnostics-0.2.0-preview.1-win-x64.zip** from a **Windows diagnostics** workflow build, extract it and double-click **GRELECY-Diagnostics.exe**.
+1. Download **GRELECY-Diagnostics-0.2.0-preview.1-win-x64.zip** from the [GitHub preview release](https://github.com/FaipL/Grelecy/releases/tag/v0.2.0-preview.1), extract it and double-click **GRELECY-Diagnostics.exe**.
 2. Choose **Report a problem**, **Share a successful test** or **Read my configuration**.
 3. The guided paths ask for the application and what happened or what you successfully tried. Versions, reproduction steps and the tested GPU can remain unknown. A detected GPU is never automatically assumed to be the card used for the test.
 4. Review your statement. Optionally add this PC's configuration and select the automatic categories to include. Optional PCI details are off by default; the main window's exclusions carry over. Your own statement, including a card you name, stays in the report.
@@ -80,6 +80,8 @@ python scripts/package_diagnostics.py
 ```
 
 Output: `artifacts/GRELECY-Diagnostics-<version>-win-x64.zip` and its SHA-256 file. The script accepts `--dotnet /path/to/dotnet` for a locally installed SDK. It builds a self-contained executable and includes the usage guide, GRELECY licenses and Microsoft notices. It does not sign, upload or release the archive.
+
+Preview publication is a separate maintainer action: dispatch **Windows diagnostics** from `main` with `publish_preview` enabled. Both test jobs and the packaged executable checks must succeed. The publishing job verifies the checksum, uploads to a draft release, checks the attached asset names and sizes, then publishes it as a prerelease. Only that job has `contents: write`; pull requests and ordinary builds cannot publish. Existing tags or releases are never replaced automatically.
 
 Configuration-only JSON retains schema version 1. Guided reports use schema version 2 with a `user_reported` observation, a report `createdAt` time, and an optional nested, filtered configuration using schema 1. A missing configuration is `null`, with no invented collection timestamp. There is no global `compatible` or `supported` verdict. The application does not maintain or publish a compatibility database.
 
