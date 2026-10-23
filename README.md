@@ -107,7 +107,7 @@ The repository includes a static project website in French and English, using th
 
 ### Windows configuration reporter (prototype)
 
-An experimental desktop application helps participants prepare a local configuration report through a French/English graphical interface. It reads Windows and graphics-card information, lets users choose the sections to share, and saves or copies a report. It does not install drivers, upload reports automatically, or test compatibility. See [the user guide and development instructions](docs/DIAGNOSTICS.md). Real-PC acceptance testing is still required before treating this prototype as a stable release.
+An experimental desktop application helps participants **report a problem** or **share a successful test** through a French/English guided interface. It asks simple questions about the application and observed result, optionally adds local Windows/GPU information, and lets users review, copy or save the report. Unknown versions and unavailable hardware information do not prevent participation. It does not install drivers, upload reports automatically, or test compatibility itself. A working-test report applies only to the scenario described. See [the user guide and development instructions](docs/DIAGNOSTICS.md). Real-PC acceptance testing is still required before treating this prototype as a stable release.
 
 ## Independence and third-party software
 

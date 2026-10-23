@@ -5,10 +5,12 @@
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import zipfile
 from pathlib import Path
+from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / "src/Grelecy.Diagnostics.Windows/Grelecy.Diagnostics.Windows.csproj"
@@ -68,7 +70,10 @@ def package(dotnet: str) -> None:
     if not required.issubset(found):
         raise RuntimeError("Missing third-party license notices for: " + ", ".join(sorted(required - found)))
 
-    archive = ARTIFACTS / "GRELECY-Diagnostics-win-x64.zip"
+    version = ElementTree.parse(PROJECT).findtext(".//Version")
+    if version is None or not re.fullmatch(r"[A-Za-z0-9.+-]+", version):
+        raise RuntimeError("The application must declare a valid version for its archive")
+    archive = ARTIFACTS / f"GRELECY-Diagnostics-{version}-win-x64.zip"
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as output:
         for path in sorted(stage.rglob("*")):
             if path.is_file():
