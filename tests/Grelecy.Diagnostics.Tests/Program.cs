@@ -118,6 +118,129 @@ var tests = new (string Name, Action Body)[]
         }
         using var json = JsonDocument.Parse(ReportFormatter.ToJson(report, new()));
         Equal("Windows", json.RootElement.GetProperty("windows").GetProperty("edition").GetString());
+    }),
+    ("Problem observations validate the user's evidence and retain the real collection timestamp", () =>
+    {
+        var observation = ObservationSample(ObservationKind.Problem);
+        Equal(0, ObservationFormatter.Validate(observation with { Steps = "", Expected = "", TestedGpu = "" }).Count);
+        var errors = ObservationFormatter.Validate(observation with { SoftwareName = " \u202E", Observed = "\r\n\0" });
+        Check(errors.SequenceEqual(new[] { "software_required", "observed_required" }), "problem validation must require software and an observation, not reproduction steps");
+        Check(ObservationFormatter.Validate(observation with { Kind = (ObservationKind)999 }).Contains("kind_invalid"), "invalid observation kinds must be reported");
+        var report = new ObservationReport(new DateTimeOffset(2026, 10, 23, 13, 0, 0, TimeSpan.Zero), observation, Sample(null));
+        using var json = JsonDocument.Parse(ObservationFormatter.ToJson(report, new()));
+        Equal(2, json.RootElement.GetProperty("schemaVersion").GetInt32());
+        var declared = json.RootElement.GetProperty("observation");
+        Equal("problem", declared.GetProperty("kind").GetString());
+        Equal("user_reported", declared.GetProperty("source").GetString());
+        Equal("visual_issue", declared.GetProperty("category").GetString());
+        Equal("The screen remains black", declared.GetProperty("observed").GetString());
+        var configuration = json.RootElement.GetProperty("configuration");
+        Equal(1, configuration.GetProperty("schemaVersion").GetInt32());
+        Equal("1970-01-01T00:00:00.0000000+00:00", configuration.GetProperty("collectedAt").GetString());
+        Equal("2026-10-23T13:00:00.0000000+00:00", json.RootElement.GetProperty("createdAt").GetString());
+    }),
+    ("The two observation routes exclude stale fields and scope positive results to the described test", () =>
+    {
+        var working = ObservationSample(ObservationKind.Working) with
+        {
+            Expected = "STALE-PROBLEM-EXPECTED", Observed = "STALE-PROBLEM-OBSERVED", Problem = ProblemCategory.Crash
+        };
+        Equal(0, ObservationFormatter.Validate(working with { Observed = "", Duration = "", Limitations = "" }).Count);
+        Check(ObservationFormatter.Validate(working with { Steps = "\n\u202E" }).SequenceEqual(new[] { "steps_required" }), "a working report must describe the actual test");
+        var report = new ObservationReport(DateTimeOffset.UnixEpoch, working, null);
+        foreach (var format in ObservationFormats(report, new()))
+        {
+            DoesNotContain("STALE-PROBLEM", format);
+            Contains("1080p", format);
+        }
+        using var json = JsonDocument.Parse(ObservationFormatter.ToJson(report, new()));
+        var declared = json.RootElement.GetProperty("observation");
+        Equal("working", declared.GetProperty("kind").GetString());
+        Equal("worked_in_described_test", declared.GetProperty("resultScope").GetString());
+        foreach (var field in new[] { "expected", "observed", "category", "compatible", "supported" })
+            Check(!declared.TryGetProperty(field, out _), $"working reports must omit {field}");
+        Contains("ne garantit pas la compatibilité générale", ObservationFormatter.ToPlainText(report, UiLanguage.French, new()));
+        Contains("does not guarantee general", ObservationFormatter.ToPlainText(report, UiLanguage.English, new()));
+        var problem = working with { Kind = ObservationKind.Problem, Observed = "Image missing", Duration = "STALE-WORKING-DURATION", Settings = "Reduced shadows", Limitations = "Tried windowed mode" };
+        foreach (var format in ObservationFormats(report with { Observation = problem }, new()))
+        {
+            DoesNotContain("STALE-WORKING", format);
+            Contains("Reduced shadows", format);
+            Contains("Tried windowed mode", format);
+        }
+        using var problemJson = JsonDocument.Parse(ObservationFormatter.ToJson(report with { Observation = problem }, new()));
+        var problemDeclared = problemJson.RootElement.GetProperty("observation");
+        Equal("Reduced shadows", problemDeclared.GetProperty("settings").GetString());
+        Equal("Tried windowed mode", problemDeclared.GetProperty("limitations").GetString());
+        Check(!problemDeclared.TryGetProperty("duration", out _), "problem reports must omit duration");
+        Contains("Autres essais ou solutions tentées", ObservationFormatter.ToPlainText(report with { Observation = problem }, UiLanguage.French, new()));
+        Contains("Other tests or attempted solutions", ObservationFormatter.ToPlainText(report with { Observation = problem }, UiLanguage.English, new()));
+    }),
+    ("Collection checkboxes filter only automatic data and never erase the user's statement", () =>
+    {
+        var report = new ObservationReport(DateTimeOffset.UnixEpoch, ObservationSample(ObservationKind.Problem) with { TestedGpu = "My manually stated GPU" }, Sample(new("10DE", "1C03", "85AE1043", "A1")));
+        foreach (var format in ObservationFormats(report, new(false, false, true)))
+        {
+            Contains("My manually stated GPU", format);
+            Contains("The screen remains black", format);
+            DoesNotContain("Windows 11 Home", format);
+            DoesNotContain("Intel UHD", format);
+            DoesNotContain("85AE1043", format);
+        }
+        using var none = JsonDocument.Parse(ObservationFormatter.ToJson(report, new(false, false, true)));
+        Equal(JsonValueKind.Null, none.RootElement.GetProperty("configuration").ValueKind);
+        using var gpuOnly = JsonDocument.Parse(ObservationFormatter.ToJson(report, new(false, true, false)));
+        var collected = gpuOnly.RootElement.GetProperty("configuration");
+        Check(!collected.TryGetProperty("windows", out _), "Windows must be absent");
+        Equal(2, collected.GetProperty("graphics").GetArrayLength());
+        Check(!collected.GetProperty("graphics")[0].TryGetProperty("hardware", out _), "hardware IDs must remain opt-in");
+    }),
+    ("Manual reports preserve unknown values without inventing a collection or test date", () =>
+    {
+        var report = new ObservationReport(new DateTimeOffset(2026, 10, 23, 15, 0, 0, TimeSpan.FromHours(2)),
+            ObservationSample(ObservationKind.Working) with { SoftwareVersion = "", TestedGpu = "", Duration = "", Settings = "", Limitations = "" }, null);
+        using var json = JsonDocument.Parse(ObservationFormatter.ToJson(report, new()));
+        Equal("2026-10-23T13:00:00.0000000+00:00", json.RootElement.GetProperty("createdAt").GetString());
+        Equal(JsonValueKind.Null, json.RootElement.GetProperty("configuration").ValueKind);
+        DoesNotContain("collectedAt", json.RootElement.GetRawText());
+        DoesNotContain("testedAt", json.RootElement.GetRawText());
+        var declared = json.RootElement.GetProperty("observation");
+        Equal(JsonValueKind.Null, declared.GetProperty("software").GetProperty("version").ValueKind);
+        Equal(JsonValueKind.Null, declared.GetProperty("testedGpu").ValueKind);
+        Equal(JsonValueKind.Null, declared.GetProperty("duration").ValueKind);
+        Contains("Aucun relevé automatique joint", ObservationFormatter.ToPlainText(report, UiLanguage.French, new()));
+        Contains("No automatic configuration is attached", ObservationFormatter.ToPlainText(report, UiLanguage.English, new()));
+    }),
+    ("Every user note preserves paragraphs but neutralizes Markdown, HTML, controls and excessive length", () =>
+    {
+        const string note = "First step\r\n\r\n[link](https://example.invalid)\r\n# heading\n<script>\u202E\0";
+        const string normalized = "First step\n\n[link](https://example.invalid)\n# heading\n<script>";
+        Equal(normalized, ObservationText.Narrative(note));
+        Equal(4000, ObservationText.Narrative(new string('x', 5000)).Length);
+        Equal(3999, ObservationText.Narrative(new string('x', 3999) + "😀").Length);
+        Equal(256, ObservationText.SingleLine(new string('x', 5000)).Length);
+        foreach (var kind in new[] { ObservationKind.Problem, ObservationKind.Working })
+        {
+            var observation = new UserObservation(kind, "[App](bad)", "<version>", "[GPU]", ProblemCategory.Other, note, note, note, note, note, note);
+            var report = new ObservationReport(DateTimeOffset.UnixEpoch, observation, null);
+            foreach (var language in new[] { UiLanguage.French, UiLanguage.English })
+            {
+                var markdown = ObservationFormatter.ToMarkdown(report, language, new());
+                Contains("> First step", markdown);
+                Contains("> \\[link\\]", markdown);
+                Contains("> \\# heading", markdown);
+                Contains("> \\<script\\>", markdown);
+                DoesNotContain("[App](bad)", markdown);
+                DoesNotContain("<version>", markdown);
+                DoesNotContain("\u202E", markdown);
+                Contains(normalized.Replace("\n", Environment.NewLine, StringComparison.Ordinal), ObservationFormatter.ToPlainText(report, language, new()));
+            }
+            using var json = JsonDocument.Parse(ObservationFormatter.ToJson(report, new()));
+            var declared = json.RootElement.GetProperty("observation");
+            Equal(normalized, declared.GetProperty("steps").GetString());
+            foreach (var field in kind == ObservationKind.Problem ? new[] { "expected", "observed", "settings", "limitations" } : new[] { "duration", "settings", "limitations" })
+                Equal(normalized, declared.GetProperty(field).GetString());
+        }
     })
 };
 
@@ -141,6 +264,20 @@ static IEnumerable<string> Formats(DiagnosticReport report, ReportOptions option
     {
         yield return ReportFormatter.ToMarkdown(report, language, options);
         yield return ReportFormatter.ToPlainText(report, language, options);
+    }
+}
+
+static UserObservation ObservationSample(ObservationKind kind) => new(kind, "Example game", "1.2", "NVIDIA GTX 1060",
+    ProblemCategory.VisualIssue, "Open the game\nLoad the saved scene", "The scene should appear", "The screen remains black",
+    "15 minutes", "1080p, medium", "Only the first scene was tested");
+
+static IEnumerable<string> ObservationFormats(ObservationReport report, ReportOptions options)
+{
+    yield return ObservationFormatter.ToJson(report, options);
+    foreach (var language in new[] { UiLanguage.French, UiLanguage.English })
+    {
+        yield return ObservationFormatter.ToMarkdown(report, language, options);
+        yield return ObservationFormatter.ToPlainText(report, language, options);
     }
 }
 

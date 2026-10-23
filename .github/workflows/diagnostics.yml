@@ -3,14 +3,18 @@ name: Windows diagnostics
 
 on:
   push:
-    branches: [main, 'codex/windows-gui-diagnostics']
-    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', '.github/workflows/diagnostics.yml']
+    branches: [main]
+    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
   pull_request:
-    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', '.github/workflows/diagnostics.yml']
+    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: diagnostics-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   reports:
@@ -53,6 +57,6 @@ jobs:
         with:
           name: GRELECY-Diagnostics-win-x64
           path: |
-            artifacts/GRELECY-Diagnostics-win-x64.zip
-            artifacts/GRELECY-Diagnostics-win-x64.zip.sha256
+            artifacts/GRELECY-Diagnostics-*-win-x64.zip
+            artifacts/GRELECY-Diagnostics-*-win-x64.zip.sha256
           if-no-files-found: error

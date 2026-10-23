@@ -7,7 +7,7 @@ namespace Grelecy.Diagnostics;
 
 public static class ReportFormatter
 {
-    public const string ApplicationVersion = "0.1.0-preview.1";
+    public const string ApplicationVersion = "0.2.0-preview.1";
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 
     public static string ToPlainText(DiagnosticReport report, UiLanguage language, ReportOptions options) =>

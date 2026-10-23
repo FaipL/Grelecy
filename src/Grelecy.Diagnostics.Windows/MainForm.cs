@@ -27,6 +27,8 @@ public sealed class MainForm : Form
     private readonly Button save = MakeButton("save");
     private readonly Button copy = MakeButton("copy");
     private readonly Button join = MakeButton("join");
+    private readonly Button problem = MakeButton("problem");
+    private readonly Button working = MakeButton("working");
     private readonly ProgressBar progress = new() { Name = "progress", Width = 130, Height = 24, Style = ProgressBarStyle.Marquee, Visible = false };
     private readonly TextBox preview = new()
     {
@@ -57,12 +59,12 @@ public sealed class MainForm : Form
 
         var root = new TableLayoutPanel
         {
-            Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 10,
+            Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 11,
             Padding = new Padding(22), AutoScroll = true,
         };
         root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        for (var i = 0; i < 10; i++)
-            root.RowStyles.Add(new RowStyle(i == 6 ? SizeType.Percent : SizeType.AutoSize, i == 6 ? 100 : 0));
+        for (var i = 0; i < 11; i++)
+            root.RowStyles.Add(new RowStyle(i == 7 ? SizeType.Percent : SizeType.AutoSize, i == 7 ? 100 : 0));
 
         var header = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, AutoSize = true, Margin = new Padding(0, 0, 0, 12) };
         header.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -80,28 +82,33 @@ public sealed class MainForm : Form
         root.Controls.Add(header, 0, 0);
         root.Controls.Add(introduction, 0, 1);
 
+        var guidedActions = MakeFlow();
+        problem.Font = working.Font = new Font(Font, FontStyle.Bold);
+        guidedActions.Controls.AddRange([problem, working]);
+        root.Controls.Add(guidedActions, 0, 2);
+
         stage.Font = new Font(Font, FontStyle.Bold);
-        root.Controls.Add(stage, 0, 2);
+        root.Controls.Add(stage, 0, 3);
         var scanRow = MakeFlow();
         scanRow.Controls.Add(scan);
         scanRow.Controls.Add(progress);
-        root.Controls.Add(scanRow, 0, 3);
-        root.Controls.Add(status, 0, 4);
+        root.Controls.Add(scanRow, 0, 4);
+        root.Controls.Add(status, 0, 5);
 
         var options = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, AutoSize = true, Margin = new Padding(0, 8, 0, 8) };
         options.Controls.Add(optionsLabel);
         var choices = MakeFlow();
         choices.Controls.AddRange([includeWindows, includeGraphics, includeIds]);
         options.Controls.Add(choices);
-        root.Controls.Add(options, 0, 5);
-        root.Controls.Add(preview, 0, 6);
+        root.Controls.Add(options, 0, 6);
+        root.Controls.Add(preview, 0, 7);
 
         var actions = MakeFlow();
         actions.Margin = new Padding(0, 12, 0, 4);
         actions.Controls.AddRange([save, copy, join]);
-        root.Controls.Add(actions, 0, 7);
-        root.Controls.Add(shareHelp, 0, 8);
-        root.Controls.Add(footer, 0, 9);
+        root.Controls.Add(actions, 0, 8);
+        root.Controls.Add(shareHelp, 0, 9);
+        root.Controls.Add(footer, 0, 10);
         Controls.Add(root);
 
         wrappingLabels.AddRange([introduction, stage, status, optionsLabel, shareHelp, footer]);
@@ -124,6 +131,8 @@ public sealed class MainForm : Form
         save.Click += (_, _) => SaveReport();
         copy.Click += (_, _) => CopyReport();
         join.Click += (_, _) => OpenJoinForm();
+        problem.Click += (_, _) => OpenGuidedReport(ObservationKind.Problem);
+        working.Click += (_, _) => OpenGuidedReport(ObservationKind.Working);
         ApplyLanguage();
         Shown += (_, _) =>
         {
@@ -181,6 +190,8 @@ public sealed class MainForm : Form
         save.Text = T("save");
         copy.Text = T("copy");
         join.Text = T("join");
+        problem.Text = T("problem");
+        working.Text = T("working");
         shareHelp.Text = T("shareHelp");
         footer.Text = T("footer");
         preview.AccessibleName = T("previewName");
@@ -192,6 +203,7 @@ public sealed class MainForm : Form
     {
         includeIds.Enabled = includeGraphics.Checked;
         scan.Enabled = !busy;
+        problem.Enabled = working.Enabled = !busy;
         scan.Text = T(busy ? "reading" : report is null ? "scan" : "scanAgain");
         stage.Text = T(report is null ? "stage1" : "stage2");
         SetStatus(statusKey);
@@ -309,5 +321,12 @@ public sealed class MainForm : Form
         {
             MessageBox.Show(this, T("browserError") + "\n\n" + JoinUrl, T("windowTitle"), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+    }
+
+    private void OpenGuidedReport(ObservationKind kind)
+    {
+        if (busy) return;
+        using var dialog = new GuidedReportForm(kind, report, collect, Language, initialOptions: Options);
+        dialog.ShowDialog(this);
     }
 }
