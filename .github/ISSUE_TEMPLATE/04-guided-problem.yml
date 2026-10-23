@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: CC-BY-4.0
+name: Problem report prepared with GRELECY
+description: Paste the report from the graphical app, or describe a problem in your own words.
+title: "[Problem] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        In GRELECY, choose **Report a problem**, then **Copy the report** and paste it below.
+        You may also describe the issue directly. Unknown versions or unavailable hardware details are welcome.
+        This is a public contribution. Review your report and remove personal information before posting.
+        A report describes an observation; it does not establish the cause or promise a fix.
+  - type: textarea
+    id: report
+    attributes:
+      label: Report / Rapport
+      description: Include the application, what happened, and reproduction steps or configuration if known. French and English are welcome.
+      placeholder: Paste your prepared report here, or describe what happened.
+    validations:
+      required: true

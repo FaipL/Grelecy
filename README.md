@@ -105,6 +105,12 @@ Additional community channels will be linked here when they are available.
 
 The repository includes a static project website in French and English, using the existing GRELECY visual identity. See [the website guide](website/README.md) for editing, local preview, and GitHub Pages deployment.
 
+### Windows configuration reporter (prototype)
+
+An experimental desktop application helps participants **report a problem** or **share a successful test** through a French/English guided interface. It asks simple questions about the application and observed result, optionally adds local Windows/GPU information, and lets users review, copy or save the report. Unknown versions and unavailable hardware information do not prevent participation. It does not install drivers, upload reports automatically, or test compatibility itself. A working-test report applies only to the scenario described. See [the user guide and development instructions](docs/DIAGNOSTICS.md). Real-PC acceptance testing is still required before treating this prototype as a stable release.
+
+[Download the Windows x64 preview](https://github.com/FaipL/Grelecy/releases/tag/v0.2.0-preview.1) · [Preview release notes](docs/releases/0.2.0-preview.1.md)
+
 ## Independence and third-party software
 
 GRELECY is independent and is **not affiliated with, sponsored by, or endorsed by NVIDIA**. NVIDIA, GeForce, and other product names belong to their respective owners.
@@ -120,7 +126,7 @@ Our open-source licenses apply only to material we have the right to license. Th
 | GRELECY name, logos, and visual identity | Separate [brand policy](BRANDING.md) |
 | Third-party material | Its own applicable license and notices |
 
-See **[LICENSING.md](LICENSING.md)** for the exact scope, attribution guidance, and contribution rules. The software source currently consists of the static project website and its build tools. Licenses for future repositories or driver projects will be decided explicitly for those projects.
+See **[LICENSING.md](LICENSING.md)** for the exact scope, attribution guidance, and contribution rules. The software source currently consists of the static project website, its build tools and the experimental Windows configuration reporter. Licenses for future repositories or driver projects will be decided explicitly for those projects.
 
 ---
 
