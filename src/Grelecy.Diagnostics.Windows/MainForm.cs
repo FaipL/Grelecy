@@ -12,7 +12,7 @@ public sealed class MainForm : Form
 {
     private const string JoinUrl = "https://github.com/FaipL/Grelecy/issues/new?template=01-join.yml";
     private readonly Func<DiagnosticReport> collect;
-    private readonly ComboBox languagePicker = new() { Name = "language", DropDownStyle = ComboBoxStyle.DropDownList, Width = 140 };
+    private readonly ComboBox languagePicker = new() { Name = "language", DropDownStyle = ComboBoxStyle.DropDownList, Width = 180, RightToLeft = RightToLeft.No };
     private readonly Label languageLabel = MakeLabel("languageLabel");
     private readonly Label introduction = MakeLabel("introduction");
     private readonly Label stage = MakeLabel("stage");
@@ -42,7 +42,7 @@ public sealed class MainForm : Form
     private bool timedOut;
     private string statusKey = "ready";
     private string savedName = "";
-    private UiLanguage Language => languagePicker.SelectedIndex == 0 ? UiLanguage.French : UiLanguage.English;
+    private UiLanguage Language => LanguageCatalog.All[Math.Max(0, languagePicker.SelectedIndex)].Language;
     private ReportOptions Options => new(includeWindows.Checked, includeGraphics.Checked,
         includeGraphics.Checked && includeIds.Checked);
 
@@ -56,6 +56,8 @@ public sealed class MainForm : Form
         MinimumSize = new Size(640, 560);
         Size = new Size(900, 740);
         StartPosition = FormStartPosition.CenterScreen;
+        Icon = Branding.CreateIcon();
+        Disposed += (_, _) => Icon?.Dispose();
 
         var root = new TableLayoutPanel
         {
@@ -72,10 +74,14 @@ public sealed class MainForm : Form
         var title = MakeLabel("title");
         title.Text = "GRELECY";
         title.Font = new Font(Font.FontFamily, 24F, FontStyle.Bold);
-        header.Controls.Add(title, 0, 0);
+        var brand = MakeFlow();
+        brand.WrapContents = false;
+        brand.Controls.Add(Branding.CreateLogoPictureBox("brandLogo"));
+        brand.Controls.Add(title);
+        header.Controls.Add(brand, 0, 0);
         var languageBox = new FlowLayoutPanel { AutoSize = true, FlowDirection = FlowDirection.TopDown, WrapContents = false };
-        languagePicker.Items.AddRange(["Français", "English"]);
-        languagePicker.SelectedIndex = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "fr" ? 0 : 1;
+        languagePicker.Items.AddRange(LanguageCatalog.All.Select(item => (object)item.NativeName).ToArray());
+        languagePicker.SelectedIndex = LanguageIndex(LanguageCatalog.FromCulture(CultureInfo.CurrentUICulture));
         languageBox.Controls.Add(languageLabel);
         languageBox.Controls.Add(languagePicker);
         header.Controls.Add(languageBox, 1, 0);
@@ -134,6 +140,7 @@ public sealed class MainForm : Form
         problem.Click += (_, _) => OpenGuidedReport(ObservationKind.Problem);
         working.Click += (_, _) => OpenGuidedReport(ObservationKind.Working);
         ApplyLanguage();
+        Theme.Attach(this);
         Shown += (_, _) =>
         {
             // Fit the initial window to the current work area, including display scaling.
@@ -173,10 +180,19 @@ public sealed class MainForm : Form
         Dock = DockStyle.Fill, AutoSize = true, WrapContents = true, Margin = new Padding(0),
     };
 
+    private static int LanguageIndex(UiLanguage language)
+    {
+        var index = LanguageCatalog.All.ToList().FindIndex(item => item.Language == language);
+        return index >= 0 ? index : 1;
+    }
+
     private string T(string key) => UiText.Get(key, Language);
 
     private void ApplyLanguage()
     {
+        var rtl = LanguageCatalog.Get(Language).IsRightToLeft;
+        RightToLeft = rtl ? RightToLeft.Yes : RightToLeft.No;
+        RightToLeftLayout = rtl;
         if (report is not null && statusKey is "copied" or "saved") statusKey = "updated";
         Text = T("windowTitle");
         languageLabel.Text = T("language");
@@ -328,5 +344,6 @@ public sealed class MainForm : Form
         if (busy) return;
         using var dialog = new GuidedReportForm(kind, report, collect, Language, initialOptions: Options);
         dialog.ShowDialog(this);
+        languagePicker.SelectedIndex = LanguageIndex(dialog.SelectedLanguage);
     }
 }
