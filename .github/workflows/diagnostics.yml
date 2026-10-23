@@ -4,9 +4,9 @@ name: Windows diagnostics
 on:
   push:
     branches: [main]
-    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', 'docs/releases/**', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
+    paths: ['src/**', 'tests/**', 'assets/brand/**', 'BRANDING.md', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', 'docs/releases/**', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
   pull_request:
-    paths: ['src/**', 'tests/**', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', 'docs/releases/**', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
+    paths: ['src/**', 'tests/**', 'assets/brand/**', 'BRANDING.md', 'global.json', 'scripts/package_diagnostics.py', 'docs/DIAGNOSTICS.md', 'docs/releases/**', '.github/ISSUE_TEMPLATE/**', '.github/workflows/diagnostics.yml']
   workflow_dispatch:
     inputs:
       publish_preview:

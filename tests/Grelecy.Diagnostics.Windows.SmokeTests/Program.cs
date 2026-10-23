@@ -142,6 +142,9 @@ internal static class Program
                 await TestGuidedAsync(form, ObservationKind.Working, screenshots);
                 await TestGuidedWithoutConfigurationAsync(form, screenshots);
                 await TestGuidedTimeoutAsync(form);
+                await TestLocalizedFormsAsync(form, screenshots);
+                ThemeSmoke.Run(Check);
+                TestThemeScreenshots(form, screenshots);
                 uiChecksCompleted = true;
             }
             catch (Exception error) { failure = error; }
@@ -408,6 +411,106 @@ internal static class Program
             releaseCollector.Set();
             guided.Close();
         }
+    }
+
+    private static async Task TestLocalizedFormsAsync(MainForm main, string? screenshots)
+    {
+        var language = Find<ComboBox>(main, "language");
+        var preview = Find<TextBox>(main, "preview");
+        Check(language.Items.Count == 14, "All fourteen languages are offered by their native names");
+        Check(main.Icon is not null && Find<PictureBox>(main, "brandLogo").Image is not null,
+            "The main window displays the GRELECY logo and window icon");
+        main.Size = new Size(960, 800);
+        for (var index = 0; index < LanguageCatalog.All.Count; index++)
+        {
+            var item = LanguageCatalog.All[index];
+            language.SelectedIndex = index;
+            Check(main.Text == LocalizedText.Get("ui.windowTitle", item.Language) &&
+                preview.Text.Contains(LocalizedText.Get("report.grelecyConfigurationReport", item.Language), StringComparison.Ordinal),
+                item.Code + ": the main window and configuration preview use the selected language");
+            Check(main.RightToLeftLayout == item.IsRightToLeft &&
+                main.RightToLeft == (item.IsRightToLeft ? RightToLeft.Yes : RightToLeft.No),
+                item.Code + ": writing direction follows the language");
+            Check(preview.Text.Contains("NVIDIA GeForce GTX 1060", StringComparison.Ordinal),
+                item.Code + ": changing language keeps the collected configuration");
+            if (item.Code is "ar" or "zh" or "de") Capture(main, screenshots, "diagnostics-" + item.Code + ".png");
+        }
+        foreach (var kind in new[] { ObservationKind.Problem, ObservationKind.Working })
+        {
+            using var guided = new GuidedReportForm(kind, Example,
+                () => throw new CheckFailure("Changing language must not collect hardware"), UiLanguage.English);
+            guided.Show(main);
+            await Task.Delay(30);
+            Find<TextBox>(guided, "software").Text = "Example Game 日本語 العربية";
+            Find<ComboBox>(guided, "testedGpu").Text = "Custom GTX 1060";
+            Find<Button>(guided, "next").PerformClick();
+            Find<TextBox>(guided, kind == ObservationKind.Problem ? "observed" : "steps").Text = "Description 한국어 中文";
+            Find<Button>(guided, "next").PerformClick();
+            var picker = Find<ComboBox>(guided, "language");
+            var report = Find<TextBox>(guided, "preview");
+            for (var index = 0; index < LanguageCatalog.All.Count; index++)
+            {
+                var item = LanguageCatalog.All[index];
+                picker.SelectedIndex = index;
+                var titleKey = kind == ObservationKind.Problem ? "observation.grelecyProblemReport" : "observation.grelecyReportedWorkingTest";
+                Check(report.Text.Contains(LocalizedText.Get(titleKey, item.Language), StringComparison.Ordinal) &&
+                    report.Text.Contains("Example Game 日本語 العربية", StringComparison.Ordinal) &&
+                    report.Text.Contains("Description 한국어 中文", StringComparison.Ordinal) &&
+                    Find<ComboBox>(guided, "testedGpu").Text == "Custom GTX 1060",
+                    kind + "/" + item.Code + ": review is translated while Unicode answers and custom GPU are preserved");
+                Check(guided.RightToLeftLayout == item.IsRightToLeft && Find<Button>(guided, "copy").Enabled,
+                    kind + "/" + item.Code + ": report stays shareable with the correct writing direction");
+                if (item.Code == "ar") Capture(guided, screenshots, kind + "-review-ar.png");
+            }
+            Check(guided.Icon is not null && Find<PictureBox>(guided, "brandLogo").Image is not null,
+                kind + ": guided window also displays the brand");
+            // Check long translations and mirrored navigation on a small display.
+            guided.Size = new Size(640, 590);
+            foreach (var code in new[] { "de", "ar", "ja" })
+            {
+                picker.SelectedIndex = LanguageCatalog.All.ToList().FindIndex(item => item.Code == code);
+                await Task.Delay(30);
+                Capture(guided, screenshots, kind + "-small-" + code + ".png");
+                foreach (var name in new[] { "back", "save", "copy", "openIssue" })
+                {
+                    var button = Find<Button>(guided, name);
+                    var bounds = button.RectangleToScreen(button.ClientRectangle);
+                    var visible = bounds;
+                    for (var ancestor = button.Parent; ancestor is not null; ancestor = ancestor.Parent)
+                        visible = Rectangle.Intersect(visible, ancestor.RectangleToScreen(ancestor.ClientRectangle));
+                    Check(visible == bounds,
+                        kind + "/" + code + ": " + name + " is fully visible at the minimum window size (button "
+                            + bounds + ", visible " + visible + ")");
+                }
+            }
+            guided.Close();
+        }
+        language.SelectedIndex = 0;
+    }
+
+    private static void TestThemeScreenshots(MainForm main, string? screenshots)
+    {
+        Find<ComboBox>(main, "language").SelectedIndex = 1;
+        Theme.Apply(main, dark: false);
+        Capture(main, screenshots, "diagnostics-light-en.png");
+        Theme.Apply(main, dark: true);
+        Capture(main, screenshots, "diagnostics-dark-en.png");
+        Find<ComboBox>(main, "language").SelectedIndex = LanguageCatalog.All.ToList().FindIndex(item => item.Code == "ar");
+        Theme.Apply(main, dark: true);
+        Capture(main, screenshots, "diagnostics-dark-ar.png");
+        using var guided = new GuidedReportForm(ObservationKind.Working, Example, language: UiLanguage.Arabic);
+        guided.Show(main);
+        Find<TextBox>(guided, "software").Text = "Example Game";
+        Find<Button>(guided, "next").PerformClick();
+        Find<TextBox>(guided, "steps").Text = "مثال على تجربة ناجحة";
+        Find<Button>(guided, "next").PerformClick();
+        Theme.Apply(guided, dark: true);
+        Capture(guided, screenshots, "working-dark-ar.png");
+        Theme.Apply(guided, dark: false);
+        Capture(guided, screenshots, "working-light-ar.png");
+        guided.Close();
+        Theme.Refresh(main);
+        Find<ComboBox>(main, "language").SelectedIndex = 0;
     }
 
     private static IEnumerable<Control> Descendants(Control root)
