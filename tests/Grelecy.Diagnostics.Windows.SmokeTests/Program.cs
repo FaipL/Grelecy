@@ -30,7 +30,7 @@ internal static class Program
         // This also terminates a native modal dialog or a hung WMI call. CI must never wait indefinitely.
         using var deadline = new System.Threading.Timer(_ =>
         {
-            Console.Error.WriteLine("FAIL: Windows smoke checks exceeded 60 seconds.");
+            Failure("Windows smoke checks exceeded 60 seconds after " + assertions + " passed assertions.");
             Environment.Exit(1);
         }, null, TimeSpan.FromSeconds(60), Timeout.InfiniteTimeSpan);
         Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
@@ -167,7 +167,7 @@ internal static class Program
         }
         catch (Exception error)
         {
-            Console.Error.WriteLine("FAIL: " + error.GetType().Name + (error is CheckFailure ? " — " + error.Message : " (system details omitted)"));
+            Failure(error.GetType().Name + (error is CheckFailure ? " — " + error.Message : " (system details omitted)"));
             return 1;
         }
     }
@@ -423,6 +423,17 @@ internal static class Program
         var matches = root.Controls.Find(name, true).OfType<T>().ToArray();
         return matches.Length == 1 ? matches[0]
             : throw new CheckFailure($"Expected exactly one {typeof(T).Name} control named {name}");
+    }
+
+    private static void Failure(string message)
+    {
+        Console.Error.WriteLine("FAIL: " + message);
+        if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true")
+        {
+            // Only fixed test descriptions/types are published, never raw system error details.
+            var annotation = message.Replace("%", "%25").Replace("\r", "%0D").Replace("\n", "%0A");
+            Console.Error.WriteLine("::error title=Windows UI smoke checks::" + annotation);
+        }
     }
 
     private static void Check(bool condition, string description)
