@@ -53,6 +53,22 @@ jobs:
           if-no-files-found: ignore
       - name: Package the portable Windows application
         run: python scripts/package_diagnostics.py
+      - name: Open and close the packaged Windows executable
+        shell: pwsh
+        run: |
+          $programPath = (Resolve-Path artifacts/publish/win-x64/GRELECY-Diagnostics.exe).Path
+          $program = Start-Process -FilePath $programPath -PassThru
+          try {
+            if (-not $program.WaitForInputIdle(15000)) { throw 'The packaged application did not become ready.' }
+            $program.Refresh()
+            if ($program.HasExited -or $program.MainWindowHandle -eq 0) { throw 'The packaged application did not open a window.' }
+            if (-not $program.CloseMainWindow()) { throw 'The packaged window could not be closed normally.' }
+            if (-not $program.WaitForExit(5000)) { throw 'The packaged application did not exit after closing its window.' }
+            if ($program.ExitCode -ne 0) { throw 'The packaged application exited with an error.' }
+          } finally {
+            if (-not $program.HasExited) { $program.Kill() }
+            $program.Dispose()
+          }
       - uses: actions/upload-artifact@v4
         with:
           name: GRELECY-Diagnostics-win-x64
