@@ -57,16 +57,36 @@ jobs:
         shell: pwsh
         run: |
           $programPath = (Resolve-Path artifacts/publish/win-x64/GRELECY-Diagnostics.exe).Path
-          $program = Start-Process -FilePath $programPath -PassThru
+          $program = [System.Diagnostics.Process]::new()
+          $program.StartInfo = [System.Diagnostics.ProcessStartInfo]::new($programPath)
+          $program.StartInfo.UseShellExecute = $false
+          $phase = 'launch'
+          function Fail-ApplicationCheck([string]$message) {
+            Write-Host "::error title=Packaged Windows application::$message"
+            throw $message
+          }
           try {
-            if (-not $program.WaitForInputIdle(15000)) { throw 'The packaged application did not become ready.' }
-            $program.Refresh()
-            if ($program.HasExited -or $program.MainWindowHandle -eq 0) { throw 'The packaged application did not open a window.' }
-            if (-not $program.CloseMainWindow()) { throw 'The packaged window could not be closed normally.' }
-            if (-not $program.WaitForExit(5000)) { throw 'The packaged application did not exit after closing its window.' }
-            if ($program.ExitCode -ne 0) { throw 'The packaged application exited with an error.' }
+            if (-not $program.Start()) { Fail-ApplicationCheck 'The packaged process could not be started.' }
+            $phase = 'window'
+            $startup = [System.Diagnostics.Stopwatch]::StartNew()
+            do {
+              $program.Refresh()
+              if ($program.HasExited) { Fail-ApplicationCheck "The packaged application exited before opening its window (code $($program.ExitCode))." }
+              if ($program.MainWindowHandle -ne 0) { break }
+              Start-Sleep -Milliseconds 100
+            } while ($startup.Elapsed.TotalSeconds -lt 30)
+            if ($program.MainWindowHandle -eq 0) { Fail-ApplicationCheck 'The packaged application did not open a window within 30 seconds.' }
+            $phase = 'ready'
+            if (-not $program.WaitForInputIdle(10000)) { Fail-ApplicationCheck 'The packaged window did not become ready.' }
+            $phase = 'close'
+            if (-not $program.CloseMainWindow()) { Fail-ApplicationCheck 'The packaged window could not be closed normally.' }
+            if (-not $program.WaitForExit(5000)) { Fail-ApplicationCheck 'The packaged application did not exit after closing its window.' }
+            if ($program.ExitCode -ne 0) { Fail-ApplicationCheck "The packaged application exited with code $($program.ExitCode)." }
+          } catch {
+            Write-Host "::error title=Packaged Windows application::$phase failed ($($_.Exception.GetType().Name))."
+            throw
           } finally {
-            if (-not $program.HasExited) { $program.Kill() }
+            if ($program.Id -and -not $program.HasExited) { $program.Kill() }
             $program.Dispose()
           }
       - uses: actions/upload-artifact@v4
