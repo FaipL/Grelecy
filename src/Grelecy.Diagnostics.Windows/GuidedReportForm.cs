@@ -15,7 +15,7 @@ public sealed class GuidedReportForm : Form
     private readonly DateTimeOffset createdAt = DateTimeOffset.UtcNow;
     private readonly TimeSpan collectionTimeout;
     private DiagnosticReport? configuration;
-    private readonly ComboBox languagePicker = new() { Name = "language", DropDownStyle = ComboBoxStyle.DropDownList, Width = 140 };
+    private readonly ComboBox languagePicker = new() { Name = "language", DropDownStyle = ComboBoxStyle.DropDownList, Width = 180, RightToLeft = RightToLeft.No };
     private readonly TextBox software = Input("software", 256);
     private readonly TextBox version = Input("version", 256);
     private readonly ComboBox testedGpu = new() { Name = "testedGpu", DropDownStyle = ComboBoxStyle.DropDown, Dock = DockStyle.Top, MaxLength = 256 };
@@ -52,7 +52,8 @@ public sealed class GuidedReportForm : Form
     private bool scanInFlight;
     private bool translating;
     private string statusKey = "optionalConfiguration";
-    private UiLanguage Language => languagePicker.SelectedIndex == 0 ? UiLanguage.French : UiLanguage.English;
+    private UiLanguage Language => LanguageCatalog.All[Math.Max(0, languagePicker.SelectedIndex)].Language;
+    public UiLanguage SelectedLanguage => Language;
     private ReportOptions Options => new(includeWindows.Checked, includeGraphics.Checked, includeGraphics.Checked && includeIds.Checked);
 
     public GuidedReportForm(ObservationKind kind, DiagnosticReport? configuration = null,
@@ -71,8 +72,10 @@ public sealed class GuidedReportForm : Form
         MinimumSize = new Size(640, 590);
         Size = new Size(960, 800);
         StartPosition = FormStartPosition.CenterParent;
-        languagePicker.Items.AddRange(["Français", "English"]);
-        languagePicker.SelectedIndex = (language ?? (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "fr" ? UiLanguage.French : UiLanguage.English)) == UiLanguage.French ? 0 : 1;
+        Icon = Branding.CreateIcon();
+        Disposed += (_, _) => Icon?.Dispose();
+        languagePicker.Items.AddRange(LanguageCatalog.All.Select(item => (object)item.NativeName).ToArray());
+        languagePicker.SelectedIndex = LanguageIndex(language ?? LanguageCatalog.FromCulture(CultureInfo.CurrentUICulture));
 
         var root = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(22), ColumnCount = 1, RowCount = 6, AutoScroll = true };
         root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -80,7 +83,11 @@ public sealed class GuidedReportForm : Form
         var header = new TableLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, ColumnCount = 2 };
         header.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         header.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        header.Controls.Add(title, 0, 0);
+        var brand = Flow();
+        brand.WrapContents = false;
+        brand.Controls.Add(Branding.CreateLogoPictureBox("brandLogo"));
+        brand.Controls.Add(title);
+        header.Controls.Add(brand, 0, 0);
         var languages = Flow();
         languages.FlowDirection = FlowDirection.TopDown;
         languages.WrapContents = false;
@@ -168,12 +175,14 @@ public sealed class GuidedReportForm : Form
         void Wrap()
         {
             foreach (var label in wrapping) label.MaximumSize = new Size(Math.Max(140, ClientSize.Width - 100), 0);
-            title.MaximumSize = new Size(Math.Max(180, ClientSize.Width - 240), 0);
+            title.MaximumSize = new Size(Math.Max(100, brand.ClientSize.Width - 64 - title.Margin.Horizontal), 0);
         }
         root.Resize += (_, _) => Wrap();
+        brand.Resize += (_, _) => Wrap();
         Wrap();
         PopulateGpuChoices();
         Translate();
+        Theme.Attach(this);
         Shown += (_, _) => { Fit(); software.Focus(); };
         DpiChanged += (_, _) => BeginInvoke((Action)Fit);
     }
@@ -216,6 +225,12 @@ public sealed class GuidedReportForm : Form
         panel.Controls.Add(input);
         input.AccessibleName = T(key);
     }
+    private static int LanguageIndex(UiLanguage language)
+    {
+        var index = LanguageCatalog.All.ToList().FindIndex(item => item.Language == language);
+        return index >= 0 ? index : 1;
+    }
+
     private string T(string key) => GuidedText.Get(key, Language);
     private void Fit()
     {
@@ -227,6 +242,9 @@ public sealed class GuidedReportForm : Form
 
     private void Translate()
     {
+        var rtl = LanguageCatalog.Get(Language).IsRightToLeft;
+        RightToLeft = rtl ? RightToLeft.Yes : RightToLeft.No;
+        RightToLeftLayout = rtl;
         translating = true;
         title.Text = T(kind == ObservationKind.Problem ? "problemTitle" : "workingTitle");
         Text = "GRELECY — " + title.Text;

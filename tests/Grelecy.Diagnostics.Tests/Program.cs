@@ -241,6 +241,110 @@ var tests = new (string Name, Action Body)[]
             foreach (var field in kind == ObservationKind.Problem ? new[] { "expected", "observed", "settings", "limitations" } : new[] { "duration", "settings", "limitations" })
                 Equal(normalized, declared.GetProperty(field).GetString());
         }
+    }),
+    ("Language selection maps all supported cultures and regional variants with an English fallback", () =>
+    {
+        Equal(0, (int)UiLanguage.French);
+        Equal(1, (int)UiLanguage.English);
+        Equal(14, LanguageCatalog.All.Count);
+        Equal(Enum.GetValues<UiLanguage>().Length, LanguageCatalog.All.Count);
+        Equal(14, LanguageCatalog.All.Select(item => item.Code).Distinct(StringComparer.Ordinal).Count());
+        Equal(14, LanguageCatalog.All.Select(item => item.Language).Distinct().Count());
+        foreach (var language in LanguageCatalog.All)
+        {
+            Equal(language.Language, LanguageCatalog.FromCulture(CultureInfo.GetCultureInfo(language.Code)));
+            Check(!string.IsNullOrWhiteSpace(language.NativeName), "native language labels must be readable");
+        }
+        foreach (var culture in new[] { "zh-CN", "zh-TW", "zh-Hans", "zh-Hant" })
+            Equal(UiLanguage.Chinese, LanguageCatalog.FromCulture(CultureInfo.GetCultureInfo(culture)));
+        foreach (var culture in new[] { "no", "nb-NO", "nn-NO" })
+            Equal(UiLanguage.Norwegian, LanguageCatalog.FromCulture(CultureInfo.GetCultureInfo(culture)));
+        Equal(UiLanguage.Portuguese, LanguageCatalog.FromCulture(CultureInfo.GetCultureInfo("pt-BR")));
+        Equal(UiLanguage.English, LanguageCatalog.FromCulture(CultureInfo.GetCultureInfo("ru-RU")));
+        Equal(UiLanguage.English, LanguageCatalog.FromCulture(CultureInfo.InvariantCulture));
+        Equal(UiLanguage.English, LanguageCatalog.FromCulture(null));
+        Equal(UiLanguage.English, LanguageCatalog.Get((UiLanguage)999).Language);
+        Check(LanguageCatalog.Get(UiLanguage.Arabic).IsRightToLeft, "Arabic needs right-to-left layout");
+        Check(LanguageCatalog.All.Where(item => item.Language != UiLanguage.Arabic).All(item => !item.IsRightToLeft), "other supported languages use left-to-right layout");
+    }),
+    ("Every embedded language catalog is complete without using fallback to hide missing strings", () =>
+    {
+        var errors = LocalizedText.ValidateCatalogs();
+        Check(errors.Count == 0, $"{errors.Count} catalog errors: {string.Join(", ", errors.Take(8))}");
+        var english = LocalizedText.GetTranslations(UiLanguage.English);
+        Check(english.Count >= 160, "all UI, guided forms and report keys must be embedded");
+        foreach (var language in LanguageCatalog.All)
+        {
+            var native = LocalizedText.GetTranslations(language.Language);
+            Equal(english.Count, native.Count);
+            if (language.Language != UiLanguage.English)
+                Check(native["ui.introduction"] != english["ui.introduction"], $"{language.Code} must contain translated content, not an English catalog copy");
+            foreach (var (key, value) in native)
+                Equal(value, LocalizedText.Get(key, language.Language));
+        }
+    }),
+    ("Localization rejects misspelled keys and uses English for invalid language values", () =>
+    {
+        Equal(LocalizedText.Get("ui.windowTitle", UiLanguage.English), LocalizedText.Get("ui.windowTitle", (UiLanguage)999));
+        var rejected = false;
+        try { _ = LocalizedText.Get("ui.thisKeyDoesNotExist", UiLanguage.French); }
+        catch (KeyNotFoundException) { rejected = true; }
+        Check(rejected, "unknown keys must fail instead of displaying raw key names");
+        rejected = false;
+        try { _ = LocalizedText.GetTranslations((UiLanguage)999); }
+        catch (ArgumentOutOfRangeException) { rejected = true; }
+        Check(rejected, "raw catalog access must not mask unavailable languages");
+        Equal(ReportFormatter.ToPlainText(Sample(null), UiLanguage.English, new()),
+            ReportFormatter.ToPlainText(Sample(null), (UiLanguage)999, new()));
+    }),
+    ("Localized reports preserve Chinese, Korean, Japanese, Arabic and accented user observations", () =>
+    {
+        const string userText = "显卡 한국어 日本語 العربية Zażółć łódź";
+        var configuration = Sample(null) with { Graphics = [new(userText, "32.0.15.1234", null)] };
+        var report = new ObservationReport(DateTimeOffset.UnixEpoch,
+            ObservationSample(ObservationKind.Working) with { SoftwareName = userText, Steps = userText }, configuration);
+        foreach (var language in LanguageCatalog.All)
+        {
+            var configText = ReportFormatter.ToPlainText(configuration, language.Language, new());
+            Contains(LocalizedText.GetTranslations(language.Language)["report.grelecyConfigurationReport"], configText);
+            Contains(LocalizedText.GetTranslations(language.Language)["report.architecture"], configText);
+            Contains(userText, configText);
+            foreach (var markdown in new[] { false, true })
+            {
+                var content = markdown
+                    ? ObservationFormatter.ToMarkdown(report, language.Language, new())
+                    : ObservationFormatter.ToPlainText(report, language.Language, new());
+                Contains(LocalizedText.GetTranslations(language.Language)["observation.grelecyReportedWorkingTest"], content);
+                Contains(LocalizedText.GetTranslations(language.Language)["observation.workingBehaviorIsReportedOnlyForThe"], content);
+                Contains(userText, content);
+            }
+        }
+        Equal(userText, ObservationText.Narrative(userText));
+        Equal(userText, SafeText.Normalize(userText));
+    }),
+    ("Machine-readable schemas remain byte-for-byte stable across all supported UI cultures", () =>
+    {
+        var configuration = Sample(new("10DE", "1C03", "85AE1043", "A1"));
+        var observation = new ObservationReport(DateTimeOffset.UnixEpoch, ObservationSample(ObservationKind.Problem), configuration);
+        var expectedConfiguration = ReportFormatter.ToJson(configuration, new(true, true, true));
+        var expectedObservation = ObservationFormatter.ToJson(observation, new(true, true, true));
+        var cultureBefore = CultureInfo.CurrentCulture;
+        var uiBefore = CultureInfo.CurrentUICulture;
+        try
+        {
+            foreach (var language in LanguageCatalog.All)
+            {
+                CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(language.Code);
+                CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+                Equal(expectedConfiguration, ReportFormatter.ToJson(configuration, new(true, true, true)));
+                Equal(expectedObservation, ObservationFormatter.ToJson(observation, new(true, true, true)));
+            }
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = cultureBefore;
+            CultureInfo.CurrentUICulture = uiBefore;
+        }
     })
 };
 

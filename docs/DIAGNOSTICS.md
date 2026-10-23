@@ -1,20 +1,22 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# GRELECY Diagnostics — prototype 0.2
+# GRELECY Diagnostics — prototype 0.3
 
 ## Français
 
-Une application Windows avec interface graphique pour partager un problème, un essai réussi ou une fiche de configuration et participer à GRELECY. Aucun terminal, compte ou accès administrateur n'est nécessaire pour préparer et enregistrer le rapport. L'interface est disponible en français et en anglais.
+Une application Windows avec interface graphique pour partager un problème, un essai réussi ou une fiche de configuration et participer à GRELECY. Aucun terminal, compte ou accès administrateur n'est nécessaire pour préparer et enregistrer le rapport. L'interface, les aperçus et les rapports lisibles sont disponibles en 14 langues : français, anglais, italien, espagnol, allemand, néerlandais, portugais européen, chinois simplifié, coréen, japonais, arabe, polonais, suédois et norvégien bokmål. La langue de Windows est utilisée au démarrage quand elle est disponible ; sinon, l'anglais est proposé. Le sélecteur permet de changer de langue sans perdre les réponses. L'arabe utilise une interface de droite à gauche.
+
+L'application suit automatiquement le réglage clair ou sombre des **applications Windows**, y compris s'il change pendant son utilisation. Le contraste élevé de Windows reste prioritaire. Le logo GRELECY apparaît dans les fenêtres, la barre de titre et l'icône de l'exécutable. Les dialogues natifs de Windows, comme le choix d'un fichier, suivent les paramètres et traductions de Windows.
 
 ### Démarrer
 
-1. Télécharger l'archive **GRELECY-Diagnostics-0.2.0-preview.1-win-x64.zip** depuis [la version d'essai GitHub](https://github.com/FaipL/Grelecy/releases/tag/v0.2.0-preview.1) et extraire son contenu dans un dossier.
+1. Télécharger l'archive **GRELECY-Diagnostics-0.3.0-preview.1-win-x64.zip** depuis [la version d'essai GitHub](https://github.com/FaipL/Grelecy/releases/tag/v0.3.0-preview.1) et extraire son contenu dans un dossier.
 2. Ouvrir **GRELECY-Diagnostics.exe** par double-clic. Le runtime .NET est inclus ; aucune installation de .NET n'est nécessaire.
 3. Choisir **Signaler un problème**, **Partager un résultat qui fonctionne**, ou **Lire ma configuration** pour un relevé seul.
 4. Dans les parcours guidés, indiquer le logiciel, puis raconter l'essai. Sa version et la carte utilisée peuvent rester inconnues. La carte n'est jamais choisie automatiquement parmi les GPU détectés.
 5. À la dernière étape, vérifier l'aperçu et ajouter la configuration de ce PC si souhaité. Les choix de la fenêtre principale sont conservés. Les cases concernent uniquement le relevé automatique ; le récit et la carte que vous avez indiquée restent inclus, comme le montre l'aperçu.
 6. Utiliser **Copier le rapport** pour le coller dans un message ou **Enregistrer…** pour garder un fichier Markdown lisible. Le format JSON est proposé dans la liste des types de fichiers.
-7. **Ouvrir le formulaire GitHub** ouvre le formulaire correspondant au problème ou à l'essai réussi. Coller le rapport si souhaité. Aucune réponse n'est transmise dans l'adresse du navigateur. Les nouveaux modèles de formulaire deviennent disponibles quand les changements sont fusionnés sur la branche principale ; auparavant, utiliser la copie ou le fichier pour conserver son rapport. Le bouton **Participer sur GitHub** de la fenêtre principale reste disponible pour une présentation libre.
+7. **Ouvrir le formulaire GitHub** ouvre le formulaire correspondant au problème ou à l'essai réussi. Coller le rapport si souhaité. Aucune réponse n'est transmise dans l'adresse du navigateur. Le bouton **Participer sur GitHub** de la fenêtre principale reste disponible pour une présentation libre.
 
 Pour un problème, décrire au minimum ce qui se passe ; les étapes, le résultat attendu, les réglages et les solutions déjà tentées peuvent être ajoutés. Pour un essai réussi, décrire ce qui a effectivement fonctionné ; préciser si possible la durée, les réglages et ce qui n'a pas été essayé. Un succès concerne cet essai précis, pas une garantie générale de compatibilité.
 
@@ -40,14 +42,16 @@ Les tests automatisés vérifient le format, le filtrage des données et les par
 
 ## English
 
-GRELECY Diagnostics is a graphical Windows prototype for preparing a problem report, a successful-test report or a local configuration report. It works without a terminal, administrator rights, a .NET installation or an account. French and English are available in the same application.
+GRELECY Diagnostics is a graphical Windows prototype for preparing a problem report, a successful-test report or a local configuration report. It works without a terminal, administrator rights, a .NET installation or an account. The interface, previews and readable reports support 14 languages: French, English, Italian, Spanish, German, Dutch, European Portuguese, Simplified Chinese, Korean, Japanese, Arabic, Polish, Swedish and Norwegian Bokmål. Startup follows the Windows UI language when supported, with English as the fallback. The language picker preserves answers when changing language. Arabic uses a right-to-left interface.
 
-1. Download **GRELECY-Diagnostics-0.2.0-preview.1-win-x64.zip** from the [GitHub preview release](https://github.com/FaipL/Grelecy/releases/tag/v0.2.0-preview.1), extract it and double-click **GRELECY-Diagnostics.exe**.
+The app follows the Windows **application** light/dark preference, including changes made while it is open. Windows high contrast takes priority. The official GRELECY logo appears in both windows and in the executable/window icons. Native Windows dialogs, such as the file picker, use Windows settings and translations.
+
+1. Download **GRELECY-Diagnostics-0.3.0-preview.1-win-x64.zip** from the [GitHub preview release](https://github.com/FaipL/Grelecy/releases/tag/v0.3.0-preview.1), extract it and double-click **GRELECY-Diagnostics.exe**.
 2. Choose **Report a problem**, **Share a successful test** or **Read my configuration**.
 3. The guided paths ask for the application and what happened or what you successfully tried. Versions, reproduction steps and the tested GPU can remain unknown. A detected GPU is never automatically assumed to be the card used for the test.
 4. Review your statement. Optionally add this PC's configuration and select the automatic categories to include. Optional PCI details are off by default; the main window's exclusions carry over. Your own statement, including a card you name, stays in the report.
 5. **Copy the report** or **Save…** as Markdown or JSON. After changing the selection or language, copy/save again; earlier copies keep their original content.
-6. **Open the GitHub form** opens the corresponding problem/working-test form. Paste the report if you want to share it. These templates are available once this change is merged to the default branch. Before then, save or copy the report. **Join on GitHub** in the main window opens the existing introduction form. GitHub submissions are public and require an account.
+6. **Open the GitHub form** opens the corresponding problem/working-test form. Paste the report if you want to share it. **Join on GitHub** in the main window opens the existing introduction form. GitHub submissions are public and require an account.
 
 Nothing is uploaded automatically, and no report data is added to browser URLs. You can contribute without collected hardware information: a failed or timed-out collection does not block a manual observation. User-entered notes are distinct from automatically read information. Review them for personal information. A successful-test statement applies only to the scenario described. Report preparation time is not presented as the time of the test.
 
@@ -85,11 +89,19 @@ Preview publication is a separate maintainer action: dispatch **Windows diagnost
 
 Configuration-only JSON retains schema version 1. Guided reports use schema version 2 with a `user_reported` observation, a report `createdAt` time, and an optional nested, filtered configuration using schema 1. A missing configuration is `null`, with no invented collection timestamp. There is no global `compatible` or `supported` verdict. The application does not maintain or publish a compatibility database.
 
+### Localization and appearance
+
+UTF-8 catalogs live in `src/Grelecy.Diagnostics.Core/Localization/` and are embedded in the portable executable. `en.json` defines the complete key set. Add the same keys to every catalog and register its language/native name in `LanguageCatalog`; the core checks reject missing, empty or extra entries. The language-independent JSON schema and technical identifiers do not change with the UI language. This release contains initial translations; review by native-speaking contributors remains welcome.
+
+Appearance reads the Windows application preference without modifying it and reapplies colors on preference changes. High contrast uses Windows system colors. Branding resources are faithful derivatives of the original project logo and retain the trademark policy; embedding them does not relicense the logo under MPL.
+
 ### Windows acceptance checklist
 
 - Open the extracted program by double-click as a standard user on a PC without a separately installed .NET runtime.
 - Confirm Windows and GPU/driver values against Windows Settings and Device Manager, including both GPUs on a hybrid laptop when available.
-- Switch FR/EN before and after collection; keep results and options.
+- Switch all available languages before and after collection; keep results, notes and options. Check Arabic mirroring and mixed-script GPU names.
+- Switch Windows application light/dark preferences while both windows are open; check inputs, previews, menus and disabled controls. Enable Windows high contrast and confirm its system colors take priority.
+- Confirm the original GRELECY logo appears in each header, the title bar, taskbar and executable icon.
 - Complete both guided paths, go back and change language; verify every entered field survives and appears in the report. A successful test must describe its scope and untested areas when known.
 - Open a guided path with Windows or graphics excluded in the main window; ensure those exclusions carry over. Check a manually entered card name remains distinct from collected GPU data.
 - Use a guided report with no collection, a failed collection and a timed-out collection; its manual statement must still be exportable. Late data must not change a report after timeout.

@@ -39,6 +39,7 @@ def package(dotnet: str) -> None:
     shutil.copyfile(ROOT / "docs/DIAGNOSTICS.md", stage / "LIRE-MOI_READ-ME.md")
     shutil.copyfile(ROOT / "LICENSE", stage / "LICENSE-GRELECY-MPL-2.0.txt")
     shutil.copyfile(ROOT / "LICENSES/CC-BY-4.0.txt", stage / "LICENSE-GUIDE-CC-BY-4.0.txt")
+    shutil.copyfile(ROOT / "BRANDING.md", stage / "BRANDING.md")
 
     # Resolve the actual restored package roots; do not assume the user's home/cache location.
     assets = json.loads((PROJECT.parent / "obj/project.assets.json").read_text(encoding="utf-8"))
