@@ -100,10 +100,9 @@ public static class ObservationFormatter
     {
         var observation = report.Observation;
         _ = KindCode(observation.Kind);
-        var french = language == UiLanguage.French;
         var problem = observation.Kind == ObservationKind.Problem;
-        string T(string fr, string en) => french ? fr : en;
-        string Display(string value) => value.Length == 0 ? T("Non précisé", "Not specified") : value;
+        string T(string key) => LocalizedText.Get(key, language);
+        string Display(string value) => value.Length == 0 ? T("observation.notSpecified") : value;
         var output = new StringBuilder();
         void Heading(string text) => output.AppendLine((markdown ? "## " : "") + text).AppendLine();
         void Field(string label, string value)
@@ -122,60 +121,55 @@ public static class ObservationFormatter
         }
 
         var title = problem
-            ? T("GRELECY — Problème signalé", "GRELECY — Problem report")
-            : T("GRELECY — Essai déclaré comme fonctionnel", "GRELECY — Reported working test");
+            ? T("observation.grelecyProblemReport")
+            : T("observation.grelecyReportedWorkingTest");
         output.AppendLine((markdown ? "# " : "") + title).AppendLine();
-        output.AppendLine(T("Rapport préparé le ", "Report prepared at ")
+        output.AppendLine(T("observation.reportPreparedAt")
             + report.CreatedAt.ToUniversalTime().ToString("yyyy-MM-dd HH:mm 'UTC'", CultureInfo.InvariantCulture));
-        output.AppendLine(T("Cette date est celle de préparation du rapport, pas celle de l’essai.",
-            "This is the report preparation time, not the time of the test."));
+        output.AppendLine(T("observation.thisIsTheReportPreparationTimeNot"));
         output.AppendLine();
-        output.AppendLine(T("Les informations ci-dessous sont déclarées par l’utilisateur. Elles sont distinctes du relevé automatique.",
-            "The information below is reported by the user. It is separate from automatic collection."));
+        output.AppendLine(T("observation.theInformationBelowIsReportedByThe"));
         if (!problem)
-            output.AppendLine(T("Le fonctionnement est déclaré uniquement pour l’essai décrit. Il ne garantit pas la compatibilité générale du logiciel ou du matériel.",
-                "Working behavior is reported only for the test described. It does not guarantee general software or hardware compatibility."));
+            output.AppendLine(T("observation.workingBehaviorIsReportedOnlyForThe"));
         else
-            output.AppendLine(T("Cette déclaration décrit un problème observé ; elle n’en établit pas la cause.",
-                "This statement describes an observed problem; it does not establish its cause."));
+            output.AppendLine(T("observation.thisStatementDescribesAnObservedProblemIt"));
         output.AppendLine();
-        Heading(T("Déclaration de l’utilisateur", "User statement"));
-        Field(T("Logiciel ou jeu", "Application or game"), observation.SoftwareName);
-        Field(T("Version du logiciel", "Software version"), observation.SoftwareVersion);
-        Field(T("Carte graphique indiquée par l’utilisateur", "Graphics card stated by the user"), observation.TestedGpu);
+        Heading(T("observation.userStatement"));
+        Field(T("observation.applicationOrGame"), observation.SoftwareName);
+        Field(T("observation.softwareVersion"), observation.SoftwareVersion);
+        Field(T("observation.graphicsCardStatedByTheUser"), observation.TestedGpu);
         output.AppendLine();
         if (problem)
         {
             var category = observation.Problem switch
             {
-                ProblemCategory.WontStart => T("Ne démarre pas", "Does not start"),
-                ProblemCategory.VisualIssue => T("Problème d’affichage", "Visual issue"),
-                ProblemCategory.Crash => T("Plantage", "Crash"),
-                ProblemCategory.Slow => T("Lenteur ressentie", "Perceived slowness"),
-                ProblemCategory.Other => T("Autre", "Other"),
-                _ => T("Non précisé", "Not specified")
+                ProblemCategory.WontStart => T("observation.doesNotStart"),
+                ProblemCategory.VisualIssue => T("observation.visualIssue"),
+                ProblemCategory.Crash => T("observation.crash"),
+                ProblemCategory.Slow => T("observation.perceivedSlowness"),
+                ProblemCategory.Other => T("observation.other"),
+                _ => T("observation.notSpecified")
             };
-            Field(T("Catégorie choisie", "Selected category"), category);
+            Field(T("observation.selectedCategory"), category);
             output.AppendLine();
-            Narrative(T("Étapes pour reproduire le problème", "Steps to reproduce the problem"), observation.Steps);
-            Narrative(T("Résultat attendu", "Expected behavior"), observation.Expected);
-            Narrative(T("Ce qui a été observé", "What was observed"), observation.Observed);
+            Narrative(T("observation.stepsToReproduceTheProblem"), observation.Steps);
+            Narrative(T("observation.expectedBehavior"), observation.Expected);
+            Narrative(T("observation.whatWasObserved"), observation.Observed);
         }
         else
         {
-            Narrative(T("Essai effectué", "Test performed"), observation.Steps);
-            Narrative(T("Durée indiquée", "Reported duration"), observation.Duration);
+            Narrative(T("observation.testPerformed"), observation.Steps);
+            Narrative(T("observation.reportedDuration"), observation.Duration);
         }
-        Narrative(T("Réglages utilisés", "Settings used"), observation.Settings);
+        Narrative(T("observation.settingsUsed"), observation.Settings);
         Narrative(problem
-            ? T("Autres essais ou solutions tentées", "Other tests or attempted solutions")
-            : T("Limites de l’essai ou points non testés", "Test limitations or untested areas"), observation.Limitations);
+            ? T("observation.otherTestsOrAttemptedSolutions")
+            : T("observation.testLimitationsOrUntestedAreas"), observation.Limitations);
 
-        Heading(T("Relevé automatique joint", "Attached automatic configuration"));
+        Heading(T("observation.attachedAutomaticConfiguration"));
         if (SelectedConfiguration(report, options) is { } collected)
         {
-            output.AppendLine(T("Seules les rubriques sélectionnées sont jointes. Ce relevé ne prouve pas le résultat de l’essai déclaré.",
-                "Only the selected categories are attached. This configuration does not prove the reported test result."));
+            output.AppendLine(T("observation.onlyTheSelectedCategoriesAreAttachedThis"));
             output.AppendLine();
             var configuration = markdown
                 ? ReportFormatter.ToMarkdown(collected, language, options)
@@ -183,8 +177,7 @@ public static class ObservationFormatter
             output.Append(configuration);
         }
         else
-            output.AppendLine(T("Aucun relevé automatique joint. Les informations saisies restent une déclaration de l’utilisateur.",
-                "No automatic configuration is attached. The information entered remains a user statement."));
+            output.AppendLine(T("observation.noAutomaticConfigurationIsAttachedTheInformation"));
         return output.ToString();
     }
 }

@@ -1,7 +1,23 @@
 // SPDX-License-Identifier: MPL-2.0
 namespace Grelecy.Diagnostics;
 
-public enum UiLanguage { French, English }
+public enum UiLanguage
+{
+    French = 0,
+    English = 1,
+    Italian = 2,
+    Spanish = 3,
+    German = 4,
+    Dutch = 5,
+    Portuguese = 6,
+    Chinese = 7,
+    Korean = 8,
+    Japanese = 9,
+    Arabic = 10,
+    Polish = 11,
+    Swedish = 12,
+    Norwegian = 13
+}
 
 public enum CollectionNotice { WindowsUnavailable, GraphicsUnavailable, NoGraphicsFound }
 
