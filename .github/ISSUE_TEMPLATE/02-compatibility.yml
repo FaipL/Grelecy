@@ -6,8 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        GRELECY is gathering evidence for Kepler, Maxwell, and Pascal GPUs on Windows.
-        Pascal GeForce GTX 10 series reports are part of the initial scope.
+        GRELECY is gathering evidence for Kepler, Maxwell, Pascal, and GeForce GTX 16 (Turing) GPUs on Windows.
+        Pascal GeForce GTX 10 and Turing GeForce GTX 16 series reports are part of the initial scope.
         This form does not imply that a fix is available.
         Search existing reports first. Remove personal information from logs and screenshots.
   - type: input

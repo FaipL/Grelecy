@@ -6,7 +6,7 @@ A static, bilingual presentation of GRELECY. French is at the site root and Engl
 
 ## Community scope
 
-The site presents **Kepler, Maxwell, and Pascal** as the initial community scope on Windows, including Pascal-based GeForce GTX 10 series cards. Keep the shared scope list, both translations, and the [project brief](../docs/PROJECT_SCOPE.md) consistent. The list does not define a technical implementation order or guarantee support.
+The site presents **Kepler, Maxwell, Pascal, and Turing-based GeForce GTX 16 series cards** as the initial community scope on Windows. This Turing addition is specifically the GTX 16 series. Keep the shared scope list, both translations, and the [project brief](../docs/PROJECT_SCOPE.md) consistent. The list does not define a technical implementation order or guarantee support.
 
 ## Edit and preview
 

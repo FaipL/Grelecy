@@ -28,7 +28,7 @@
   "ui.copy": "&Kopiera rapporten",
   "ui.join": "&Delta på GitHub",
   "ui.shareHelp": "Formuläret öppnas i webbläsaren. Du kan klistra in den kopierade rapporten där. Ingenting skickas automatiskt. Bidrag på GitHub är offentliga och kräver ett GitHub-konto.",
-  "ui.footer": "Prototyp 0.3 · Oberoende gemenskap · Ägare av Kepler, Maxwell och Pascal samt andra bidragsgivare är välkomna.",
+  "ui.footer": "Prototyp 0.3 · Oberoende gemenskap · Ägare av Kepler, Maxwell, Pascal och GeForce GTX 16 (Turing) samt andra bidragsgivare är välkomna.",
   "ui.saveTitle": "Spara min rapport",
   "ui.fileFilter": "Läsbar Markdown-rapport (*.md)|*.md|Strukturerade JSON-data (*.json)|*.json",
   "ui.saved": "Rapporten sparades:",
