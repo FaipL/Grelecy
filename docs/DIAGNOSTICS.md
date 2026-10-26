@@ -10,7 +10,7 @@ L'application suit automatiquement le réglage clair ou sombre des **application
 
 ### Démarrer
 
-1. Télécharger l'archive **GRELECY-Diagnostics-0.3.0-preview.1-win-x64.zip** depuis [la version d'essai GitHub](https://github.com/FaipL/Grelecy/releases/tag/v0.3.0-preview.1) et extraire son contenu dans un dossier.
+1. Télécharger l'archive **GRELECY-Diagnostics-0.3.0-preview.2-win-x64.zip** depuis [la version d'essai GitHub](https://github.com/FaipL/Grelecy/releases/tag/v0.3.0-preview.2) et extraire son contenu dans un dossier.
 2. Ouvrir **GRELECY-Diagnostics.exe** par double-clic. Le runtime .NET est inclus ; aucune installation de .NET n'est nécessaire.
 3. Choisir **Signaler un problème**, **Partager un résultat qui fonctionne**, ou **Lire ma configuration** pour un relevé seul.
 4. Dans les parcours guidés, indiquer le logiciel, puis raconter l'essai. Sa version et la carte utilisée peuvent rester inconnues. La carte n'est jamais choisie automatiquement parmi les GPU détectés.
@@ -46,7 +46,7 @@ GRELECY Diagnostics is a graphical Windows prototype for preparing a problem rep
 
 The app follows the Windows **application** light/dark preference, including changes made while it is open. Windows high contrast takes priority. The official GRELECY logo appears in both windows and in the executable/window icons. Native Windows dialogs, such as the file picker, use Windows settings and translations.
 
-1. Download **GRELECY-Diagnostics-0.3.0-preview.1-win-x64.zip** from the [GitHub preview release](https://github.com/FaipL/Grelecy/releases/tag/v0.3.0-preview.1), extract it and double-click **GRELECY-Diagnostics.exe**.
+1. Download **GRELECY-Diagnostics-0.3.0-preview.2-win-x64.zip** from the [GitHub preview release](https://github.com/FaipL/Grelecy/releases/tag/v0.3.0-preview.2), extract it and double-click **GRELECY-Diagnostics.exe**.
 2. Choose **Report a problem**, **Share a successful test** or **Read my configuration**.
 3. The guided paths ask for the application and what happened or what you successfully tried. Versions, reproduction steps and the tested GPU can remain unknown. A detected GPU is never automatically assumed to be the card used for the test.
 4. Review your statement. Optionally add this PC's configuration and select the automatic categories to include. Optional PCI details are off by default; the main window's exclusions carry over. Your own statement, including a card you name, stays in the report.
