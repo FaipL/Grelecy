@@ -111,7 +111,7 @@ The repository includes a static project website in French and English, using th
 
 An experimental desktop application helps participants **report a problem** or **share a successful test** through a guided interface in 14 languages, including right-to-left Arabic. The app follows the Windows light/dark preference and displays the GRELECY logo. It asks simple questions about the application and observed result, optionally adds local Windows/GPU information, and lets users review, copy or save the report. Unknown versions and unavailable hardware information do not prevent participation. It does not install drivers, upload reports automatically, or test compatibility itself. A working-test report applies only to the scenario described. See [the user guide and development instructions](docs/DIAGNOSTICS.md). Real-PC acceptance testing is still required before treating this prototype as a stable release.
 
-[Download the Windows x64 preview](https://github.com/FaipL/Grelecy/releases/tag/v0.3.0-preview.1) · [Preview release notes](docs/releases/0.3.0-preview.1.md)
+[Download the Windows x64 preview](https://github.com/FaipL/Grelecy/releases/tag/v0.3.0-preview.2) · [Preview release notes](docs/releases/0.3.0-preview.2.md)
 
 ## Independence and third-party software
 

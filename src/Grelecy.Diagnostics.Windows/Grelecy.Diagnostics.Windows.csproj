@@ -12,7 +12,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets/grelecy.ico</ApplicationIcon>
     <AssemblyName>GRELECY-Diagnostics</AssemblyName>
-    <Version>0.3.0-preview.1</Version>
+    <Version>0.3.0-preview.2</Version>
     <Product>GRELECY Diagnostics</Product>
     <Description>Local configuration reports for the GRELECY community</Description>
   </PropertyGroup>
