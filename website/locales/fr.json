@@ -1,7 +1,7 @@
 {
   "_license": "CC-BY-4.0 — GRELECY contributors. Traduction et adaptation de la documentation du projet.",
   "page_title": "GRELECY — Matériel ancien. Nouvelles possibilités.",
-  "description": "Une communauté indépendante pour les propriétaires de GPU NVIDIA Kepler, Maxwell et Pascal sous Windows. Rejoignez GRELECY et définissons ensemble les objectifs techniques.",
+  "description": "Une communauté indépendante pour les GPU NVIDIA Kepler, Maxwell, Pascal et GeForce GTX série 16 (Turing) sous Windows. Rejoignez GRELECY.",
   "skip_link": "Aller au contenu",
   "home_label": "Accueil GRELECY",
   "nav_label": "Navigation principale",
@@ -11,7 +11,7 @@
   "languages_label": "Choisir une langue",
   "hero_first": "Matériel ancien.",
   "hero_second": "Nouvelles possibilités.",
-  "hero_intro": "Une communauté indépendante qui explore comment prolonger la vie des cartes graphiques NVIDIA Kepler, Maxwell et Pascal sous Windows.",
+  "hero_intro": "Une communauté indépendante qui explore comment prolonger la vie des cartes graphiques NVIDIA Kepler, Maxwell, Pascal et GeForce GTX série 16 (Turing) sous Windows.",
   "join": "Rejoindre la communauté",
   "explore": "Découvrir le projet",
   "logo_alt": "Emblème GRELECY : un G argenté sur une carte graphique verte",
@@ -25,10 +25,10 @@
   "windows_detail": "Version et numéro de build précisés",
   "research_title": "La recherche d’abord.",
   "research_intro": "Nous recueillons les retours sur le matériel, étudions la compatibilité et évaluons les propositions techniques. La communauté contribue à définir un premier objectif réalisable.",
-  "scope_note": "Kepler, Maxwell et Pascal font partie du périmètre initial de la communauté. Les priorités techniques seront choisies ensemble. Une gamme commerciale n’est pas une architecture : le modèle exact du GPU compte. Aucune prise en charge n’est garantie.",
+  "scope_note": "Kepler, Maxwell, Pascal et les GTX série 16 Turing font partie du périmètre initial. Les priorités techniques seront choisies ensemble. Le modèle exact du GPU compte. Aucune prise en charge n’est garantie.",
   "contribute_title": "Partagez votre expérience.",
   "contribute_intro": "Pas besoin de savoir coder pour contribuer.",
-  "join_detail": "Présentez votre matériel Kepler, Maxwell ou Pascal, vos centres d’intérêt et vos compétences.",
+  "join_detail": "Présentez votre matériel Kepler, Maxwell, Pascal ou GeForce GTX série 16, vos centres d’intérêt et vos compétences.",
   "report": "Signaler un problème de compatibilité",
   "report_detail": "Précisez votre GPU, le build de Windows et les étapes de reproduction.",
   "propose": "Proposer une piste de recherche",
@@ -39,5 +39,6 @@
   "brand_policy": "Identité visuelle",
   "independence": "Projet communautaire indépendant, sans affiliation ni approbation de NVIDIA.",
   "license_notice": "Documentation CC BY 4.0 · Code MPL 2.0 · Visuels de marque réservés.",
-  "pascal_detail": "GeForce GTX série 10"
+  "pascal_detail": "GeForce GTX série 10",
+  "turing_detail": "GeForce GTX série 16 uniquement"
 }

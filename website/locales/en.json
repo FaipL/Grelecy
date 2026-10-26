@@ -1,7 +1,7 @@
 {
   "_license": "CC-BY-4.0 — GRELECY contributors. Adapted from the project documentation.",
   "page_title": "GRELECY — Old hardware. New possibilities.",
-  "description": "An independent community for NVIDIA Kepler, Maxwell and Pascal GPU owners on Windows. Join GRELECY and help choose the technical goals together.",
+  "description": "An independent community for NVIDIA Kepler, Maxwell, Pascal and GeForce GTX 16 (Turing) owners on Windows. Join GRELECY and help shape its goals.",
   "skip_link": "Skip to content",
   "home_label": "GRELECY home",
   "nav_label": "Main navigation",
@@ -11,7 +11,7 @@
   "languages_label": "Choose a language",
   "hero_first": "Old hardware.",
   "hero_second": "New possibilities.",
-  "hero_intro": "An independent community exploring a longer useful life for NVIDIA Kepler, Maxwell and Pascal graphics hardware on Windows.",
+  "hero_intro": "An independent community exploring a longer useful life for NVIDIA Kepler, Maxwell, Pascal and GeForce GTX 16 (Turing) graphics hardware on Windows.",
   "join": "Join the community",
   "explore": "Explore the project",
   "logo_alt": "GRELECY emblem: a silver G on a green graphics card",
@@ -25,10 +25,10 @@
   "windows_detail": "Exact version and build recorded",
   "research_title": "Research comes first.",
   "research_intro": "We gather hardware reports, investigate compatibility and assess technical proposals. The community helps define the first achievable objective.",
-  "scope_note": "Kepler, Maxwell and Pascal are all part of the initial community scope. Technical priorities will be chosen together. A product series is not an architecture: exact GPU models matter. No support is guaranteed.",
+  "scope_note": "Kepler, Maxwell, Pascal and Turing-based GTX 16 cards are in the initial community scope. Technical priorities will be chosen together. Exact GPU models matter. No support is guaranteed.",
   "contribute_title": "Bring what you know.",
   "contribute_intro": "You do not need to write code to contribute.",
-  "join_detail": "Share your Kepler, Maxwell or Pascal hardware, interests and skills.",
+  "join_detail": "Share your Kepler, Maxwell, Pascal or GeForce GTX 16 hardware, interests and skills.",
   "report": "Report a compatibility issue",
   "report_detail": "Record your GPU, Windows build and reproduction steps.",
   "propose": "Propose a research direction",
@@ -39,5 +39,6 @@
   "brand_policy": "Brand policy",
   "independence": "Independent community project. Not affiliated with or endorsed by NVIDIA.",
   "license_notice": "Documentation CC BY 4.0 · Software MPL 2.0 · Brand assets reserved.",
-  "pascal_detail": "GeForce GTX 10 series"
+  "pascal_detail": "GeForce GTX 10 series",
+  "turing_detail": "GeForce GTX 16 series only"
 }

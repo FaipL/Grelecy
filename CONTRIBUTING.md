@@ -6,7 +6,7 @@ GRELECY is forming its community. Our most useful early contributions are hardwa
 
 ## Initial community scope
 
-Owners, testers, and developers interested in **Kepler, Maxwell, or Pascal** GPUs on Windows are welcome from the start. Initial examples include Kepler-based GTX 600/700, Maxwell-based GTX 900, and Pascal-based GeForce GTX 10 series cards. Report the exact model, desktop or laptop variant, and architecture where known. No generation has a predetermined implementation priority or guaranteed support. See [Project scope](docs/PROJECT_SCOPE.md).
+Owners, testers, and developers interested in **Kepler, Maxwell, or Pascal** GPUs, or **Turing-based GeForce GTX 16 series** cards on Windows are welcome from the start. Initial examples include Kepler-based GTX 600/700, Maxwell-based GTX 900, Pascal-based GeForce GTX 10 series, and Turing-based GeForce GTX 16 series cards. Report the exact model, desktop or laptop variant, and architecture where known. No generation has a predetermined implementation priority or guaranteed support. See [Project scope](docs/PROJECT_SCOPE.md).
 
 ## Choose a starting point
 

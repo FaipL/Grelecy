@@ -28,7 +28,7 @@
   "ui.copy": "نسخ التقرير",
   "ui.join": "المشاركة على GitHub",
   "ui.shareHelp": "يُفتح النموذج في متصفحك. يمكنك لصق التقرير المنسوخ فيه. لا يُرسل أي شيء تلقائيا. المشاركات على GitHub علنية وتتطلب حساب GitHub.",
-  "ui.footer": "نموذج أولي 0.3 · مجتمع مستقل · نرحب بأصحاب بطاقات Kepler وMaxwell وPascal وسائر المساهمين.",
+  "ui.footer": "نموذج أولي 0.3 · مجتمع مستقل · نرحب بأصحاب بطاقات Kepler وMaxwell وPascal وGeForce GTX 16 (Turing) وسائر المساهمين.",
   "ui.saveTitle": "حفظ تقريري",
   "ui.fileFilter": "تقرير مقروء بصيغة Markdown (*.md)|*.md|بيانات منظمة بصيغة JSON (*.json)|*.json",
   "ui.saved": "تم حفظ التقرير:",
