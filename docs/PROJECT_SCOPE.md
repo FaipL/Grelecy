@@ -2,7 +2,7 @@
 
 # GRELECY — Current project scope / Périmètre actuel
 
-Updated / Mis à jour : **2026-10-22**.
+Updated / Mis à jour : **2026-10-26**.
 
 ## English
 
@@ -15,8 +15,9 @@ Updated / Mis à jour : **2026-10-22**.
 | Kepler | Kepler-based GTX 600/700 models |
 | Maxwell | Maxwell-based GTX 900 models |
 | Pascal | Pascal-based GeForce GTX 10 series: GTX 1050, 1050 Ti, 1060, 1070, 1070 Ti, 1080, 1080 Ti |
+| Turing (GTX 16 only) | GeForce GTX 1630, GTX 1650 and GTX 1660 families; SUPER, Ti and laptop variants where applicable |
 
-**All three generations are included from the start.** Pascal is part of the initial community scope. This scope change aims to welcome a wider pool of owners and contributors.
+**All four hardware groups are included from the start.** The initial scope includes Kepler, Maxwell, Pascal, and Turing-based GeForce GTX 16 cards. The Turing addition is limited to the GTX 16 series; RTX 20 and other Turing products are not automatically included. Community inclusion does not imply that official support has ended for every listed GPU. This scope change aims to welcome a wider pool of owners and contributors.
 
 These examples are not an exhaustive hardware whitelist. Record the exact GPU, desktop or laptop variant, architecture where known, Windows version and build, and driver version. A product series does not always identify its architecture. Reports involving other models can be useful when the hardware is clearly identified.
 
@@ -41,8 +42,9 @@ The public starting point is [the GitHub repository](https://github.com/FaipL/Gr
 | Kepler | Modèles GTX 600/700 fondés sur Kepler |
 | Maxwell | Modèles GTX 900 fondés sur Maxwell |
 | Pascal | GeForce GTX série 10 fondées sur Pascal : GTX 1050, 1050 Ti, 1060, 1070, 1070 Ti, 1080, 1080 Ti |
+| Turing (GTX série 16 uniquement) | Familles GeForce GTX 1630, GTX 1650 et GTX 1660 ; variantes SUPER, Ti et portables lorsqu’elles existent |
 
-**Les trois générations sont incluses dès le départ.** Pascal fait partie du périmètre initial de la communauté. L’objectif de cet élargissement est de toucher davantage de propriétaires et de contributeurs.
+**Les quatre groupes de matériel sont inclus dès le départ.** Le périmètre initial comprend Kepler, Maxwell, Pascal et les GeForce GTX série 16 fondées sur Turing. Cet ajout de Turing porte uniquement sur les GTX série 16 ; les RTX 20 et les autres produits Turing ne sont pas inclus automatiquement. L’inclusion dans la communauté ne signifie pas que le support officiel est terminé pour chaque GPU listé. L’objectif de cet élargissement est de toucher davantage de propriétaires et de contributeurs.
 
 Cette liste d’exemples n’est pas une liste exhaustive des cartes acceptées. Préciser le GPU exact, sa variante de bureau ou portable, son architecture si elle est connue, la version et le build de Windows ainsi que la version du pilote. Une série commerciale ne suffit pas toujours à déterminer l’architecture. Les retours sur d’autres modèles peuvent être utiles lorsque le matériel est clairement identifié.
 
@@ -57,7 +59,7 @@ Aucun pilote, correctif ou logiciel pris en charge par GRELECY n’est actuellem
 ### Référence pour les instructions du projet
 
 - Vision : créer une communauté internationale indépendante pour prolonger l’utilisation des anciennes cartes graphiques sous Windows.
-- Périmètre initial : **Kepler, Maxwell et Pascal**, notamment les GTX 600/700 Kepler, GTX 900 Maxwell et GeForce GTX série 10 Pascal. Toujours vérifier le modèle et l’architecture.
+- Périmètre initial : **Kepler, Maxwell, Pascal et GTX série 16 Turing**, notamment les GTX 600/700 Kepler, GTX 900 Maxwell, GeForce GTX série 10 Pascal et GeForce GTX série 16 Turing. Toujours vérifier le modèle et l’architecture.
 - Ressource de test connue : une GTX 1060 Pascal, incluse dans le périmètre initial.
 - Approche : réunir d’abord les passionnés, propriétaires, testeurs et développeurs, puis définir ensemble les objectifs techniques.
 - Ne pas présupposer le développement de nouveaux pilotes ni présenter une piste technique comme une décision validée.
@@ -73,4 +75,4 @@ Aucun pilote, correctif ou logiciel pris en charge par GRELECY n’est actuellem
 - [Website editing guide / Guide du site](../website/README.md)
 - [Brand policy / Politique de marque](../BRANDING.md)
 
-Hardware naming reference / Référence pour la série Pascal : [NVIDIA — GeForce GTX 10 series](https://www.nvidia.com/en-us/geforce/products/). The project scope is a GRELECY decision and does not imply NVIDIA endorsement or driver availability.
+Hardware naming reference / Référence pour la série Pascal : [NVIDIA — GeForce GTX 10 series](https://www.nvidia.com/en-us/geforce/products/). [NVIDIA — GeForce GTX 16 series comparison](https://www.nvidia.com/en-us/geforce/graphics-cards/compare/). The project scope is a GRELECY decision and does not imply NVIDIA endorsement or driver availability.

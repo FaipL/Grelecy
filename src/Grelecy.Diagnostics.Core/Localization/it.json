@@ -28,7 +28,7 @@
   "ui.copy": "&Copia il rapporto",
   "ui.join": "Par&tecipa su GitHub",
   "ui.shareHelp": "Il modulo si apre nel browser. Puoi incollarvi il rapporto copiato. Nulla viene inviato automaticamente. I contributi su GitHub sono pubblici e richiedono un account GitHub.",
-  "ui.footer": "Prototipo 0.3 · Comunità indipendente · Sono benvenuti i possessori di schede Kepler, Maxwell e Pascal e tutti gli altri partecipanti.",
+  "ui.footer": "Prototipo 0.3 · Comunità indipendente · Sono benvenuti i possessori di schede Kepler, Maxwell, Pascal e GeForce GTX serie 16 (Turing) e tutti gli altri partecipanti.",
   "ui.saveTitle": "Salva il mio rapporto",
   "ui.fileFilter": "Rapporto Markdown leggibile (*.md)|*.md|Dati strutturati JSON (*.json)|*.json",
   "ui.saved": "Rapporto salvato:",

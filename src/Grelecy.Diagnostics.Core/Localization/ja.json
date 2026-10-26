@@ -28,7 +28,7 @@
   "ui.copy": "レポートをコピー",
   "ui.join": "GitHubで参加する",
   "ui.shareHelp": "ブラウザーでフォームが開きます。コピーしたレポートを貼り付けられます。自動で送信されることはありません。GitHubへの投稿は公開され、GitHubアカウントが必要です。",
-  "ui.footer": "試作版 0.3 · 独立したコミュニティ · Kepler、Maxwell、Pascalのユーザーをはじめ、どなたでも貢献できます。",
+  "ui.footer": "試作版 0.3 · 独立したコミュニティ · Kepler、Maxwell、Pascal、GeForce GTX 16シリーズ（Turing）のユーザーをはじめ、どなたでも貢献できます。",
   "ui.saveTitle": "レポートを保存",
   "ui.fileFilter": "読みやすいMarkdownレポート (*.md)|*.md|構造化されたJSONデータ (*.json)|*.json",
   "ui.saved": "レポートの保存先：",

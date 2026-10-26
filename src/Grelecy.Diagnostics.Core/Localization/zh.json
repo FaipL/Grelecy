@@ -28,7 +28,7 @@
   "ui.copy": "复制报告",
   "ui.join": "在 GitHub 上参与",
   "ui.shareHelp": "表单将在浏览器中打开。您可以将复制的报告粘贴到表单中。工具不会自动发送任何内容。GitHub 上的提交内容是公开的，需要 GitHub 账号。",
-  "ui.footer": "原型版本 0.3 · 独立社区 · 欢迎 Kepler、Maxwell、Pascal 用户及其他贡献者参与。",
+  "ui.footer": "原型版本 0.3 · 独立社区 · 欢迎 Kepler、Maxwell、Pascal、GeForce GTX 16 系列（Turing）用户及其他贡献者参与。",
   "ui.saveTitle": "保存我的报告",
   "ui.fileFilter": "便于阅读的 Markdown 报告 (*.md)|*.md|结构化 JSON 数据 (*.json)|*.json",
   "ui.saved": "报告已保存：",
