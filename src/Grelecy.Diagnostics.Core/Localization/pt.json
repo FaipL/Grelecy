@@ -28,7 +28,7 @@
   "ui.copy": "&Copiar o relatório",
   "ui.join": "Participa&r no GitHub",
   "ui.shareHelp": "O formulário abre-se no navegador. Pode colar aí o relatório copiado. Nada é enviado automaticamente. As contribuições no GitHub são públicas e exigem uma conta GitHub.",
-  "ui.footer": "Protótipo 0.3 · Comunidade independente · São bem-vindos os proprietários de placas Kepler, Maxwell e Pascal e todos os outros participantes.",
+  "ui.footer": "Protótipo 0.3 · Comunidade independente · São bem-vindos os proprietários de placas Kepler, Maxwell, Pascal e GeForce GTX série 16 (Turing) e todos os outros participantes.",
   "ui.saveTitle": "Guardar o meu relatório",
   "ui.fileFilter": "Relatório legível em Markdown (*.md)|*.md|Dados estruturados em JSON (*.json)|*.json",
   "ui.saved": "Relatório guardado:",

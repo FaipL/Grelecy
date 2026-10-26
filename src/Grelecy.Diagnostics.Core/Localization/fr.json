@@ -28,7 +28,7 @@
   "ui.copy": "&Copier le rapport",
   "ui.join": "&Participer sur GitHub",
   "ui.shareHelp": "Le formulaire s’ouvre dans votre navigateur. Vous pouvez y coller le rapport copié. Rien n’est envoyé automatiquement. Les contributions GitHub sont publiques et nécessitent un compte GitHub.",
-  "ui.footer": "Prototype 0.3 · Communauté indépendante · Kepler, Maxwell et Pascal bienvenus, ainsi que les autres contributeurs.",
+  "ui.footer": "Prototype 0.3 · Communauté indépendante · Kepler, Maxwell, Pascal et GeForce GTX série 16 (Turing) bienvenus, ainsi que les autres contributeurs.",
   "ui.saveTitle": "Enregistrer mon rapport",
   "ui.fileFilter": "Rapport lisible Markdown (*.md)|*.md|Données structurées JSON (*.json)|*.json",
   "ui.saved": "Rapport enregistré :",

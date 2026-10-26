@@ -28,7 +28,7 @@
   "ui.copy": "Rapport &kopiëren",
   "ui.join": "&Meedoen op GitHub",
   "ui.shareHelp": "Het formulier wordt in uw browser geopend. U kunt het gekopieerde rapport daar plakken. Er wordt niets automatisch verstuurd. Bijdragen op GitHub zijn openbaar en vereisen een GitHub-account.",
-  "ui.footer": "Prototype 0.3 · Onafhankelijke gemeenschap · Eigenaars van Kepler-, Maxwell- en Pascal-kaarten en andere bijdragers zijn welkom.",
+  "ui.footer": "Prototype 0.3 · Onafhankelijke gemeenschap · Eigenaars van Kepler-, Maxwell-, Pascal- en GeForce GTX 16-kaarten (Turing) en andere bijdragers zijn welkom.",
   "ui.saveTitle": "Mijn rapport opslaan",
   "ui.fileFilter": "Leesbaar Markdown-rapport (*.md)|*.md|Gestructureerde JSON-gegevens (*.json)|*.json",
   "ui.saved": "Rapport opgeslagen:",

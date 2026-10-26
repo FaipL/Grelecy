@@ -28,7 +28,7 @@
   "ui.copy": "Bericht &kopieren",
   "ui.join": "Auf GitHub &mitmachen",
   "ui.shareHelp": "Das Formular öffnet sich in Ihrem Browser. Dort können Sie den kopierten Bericht einfügen. Es wird nichts automatisch gesendet. Beiträge auf GitHub sind öffentlich und erfordern ein GitHub-Konto.",
-  "ui.footer": "Prototyp 0.3 · Unabhängige Gemeinschaft · Besitzer von Kepler-, Maxwell- und Pascal-Karten sowie weitere Mitwirkende sind willkommen.",
+  "ui.footer": "Prototyp 0.3 · Unabhängige Gemeinschaft · Besitzer von Kepler-, Maxwell-, Pascal- und GeForce-GTX-16-Karten (Turing) sowie weitere Mitwirkende sind willkommen.",
   "ui.saveTitle": "Meinen Bericht speichern",
   "ui.fileFilter": "Lesbarer Markdown-Bericht (*.md)|*.md|Strukturierte JSON-Daten (*.json)|*.json",
   "ui.saved": "Bericht gespeichert:",

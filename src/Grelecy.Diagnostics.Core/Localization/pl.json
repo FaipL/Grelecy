@@ -28,7 +28,7 @@
   "ui.copy": "&Kopiuj raport",
   "ui.join": "&Dołącz na GitHub",
   "ui.shareHelp": "Formularz otworzy się w przeglądarce. Możesz wkleić tam skopiowany raport. Nic nie jest wysyłane automatycznie. Wpisy na GitHub są publiczne i wymagają konta GitHub.",
-  "ui.footer": "Prototyp 0.3 · Niezależna społeczność · Zapraszamy właścicieli kart Kepler, Maxwell i Pascal oraz inne osoby chcące pomóc.",
+  "ui.footer": "Prototyp 0.3 · Niezależna społeczność · Zapraszamy właścicieli kart Kepler, Maxwell, Pascal i GeForce GTX serii 16 (Turing) oraz inne osoby chcące pomóc.",
   "ui.saveTitle": "Zapisz mój raport",
   "ui.fileFilter": "Czytelny raport Markdown (*.md)|*.md|Dane strukturalne JSON (*.json)|*.json",
   "ui.saved": "Raport zapisany:",

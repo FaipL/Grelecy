@@ -2,21 +2,21 @@
 
 # GRELECY — Textes publics
 
-Version de travail du 22 octobre 2026, à valider avant publication. Source documentaire de départ : dépôt [FaipL/Grelecy](https://github.com/FaipL/Grelecy), commit `2da8619ce5a92e739fa26480eb8aaa0b42f924b0`.
+Version de travail du 26 octobre 2026, à valider avant publication. Source documentaire de départ : dépôt [FaipL/Grelecy](https://github.com/FaipL/Grelecy), commit `2da8619ce5a92e739fa26480eb8aaa0b42f924b0`.
 
-Périmètre actualisé le 22 octobre 2026 : Kepler, Maxwell et Pascal sont inclus dès le lancement de la communauté. L’ordre des travaux techniques reste à décider ensemble.
+Périmètre actualisé le 26 octobre 2026 : Kepler, Maxwell, Pascal et les GTX série 16 Turing sont inclus dès le lancement de la communauté. L’ordre des travaux techniques reste à décider ensemble.
 
 Langue principale : anglais. Versions françaises fournies pour les communautés francophones. Chaque texte peut être utilisé séparément. Les titres indiquant le format ne font pas partie du texte à publier.
 
 ## 1. Présentation courte — EN
 
-GRELECY — Green Legacy Community — brings together GPU owners, enthusiasts, testers and developers to explore how older graphics cards can remain useful on Windows. We are forming the community, starting with Kepler, Maxwell and Pascal NVIDIA GPUs, and will choose our technical goals together.
+GRELECY — Green Legacy Community — brings together GPU owners, enthusiasts, testers and developers to explore how older graphics cards can remain useful on Windows. We are forming the community, starting with Kepler, Maxwell and Pascal NVIDIA GPUs, plus Turing-based GeForce GTX 16 cards, and will choose our technical goals together.
 
 https://github.com/FaipL/Grelecy
 
 ## 1. Présentation courte — FR
 
-GRELECY — Green Legacy Community — rassemble propriétaires de cartes graphiques, passionnés, testeurs et développeurs pour explorer comment prolonger l’utilisation des anciens GPU sous Windows. La communauté se forme autour des GPU NVIDIA Kepler, Maxwell et Pascal ; nous choisirons ensemble les objectifs techniques.
+GRELECY — Green Legacy Community — rassemble propriétaires de cartes graphiques, passionnés, testeurs et développeurs pour explorer comment prolonger l’utilisation des anciens GPU sous Windows. La communauté se forme autour des GPU NVIDIA Kepler, Maxwell et Pascal, ainsi que des GeForce GTX série 16 Turing ; nous choisirons ensemble les objectifs techniques.
 
 https://github.com/FaipL/Grelecy
 
@@ -28,7 +28,7 @@ https://github.com/FaipL/Grelecy
 
 Working graphics cards can still be useful as software requirements evolve. GRELECY is an independent initiative bringing together the people who own this hardware and those who want to help understand its limitations, document problems and explore practical ways forward.
 
-Our starting focus is older NVIDIA GeForce hardware on Windows: Kepler-based GTX 600/700 models, Maxwell-based GTX 900 models and Pascal-based GeForce GTX 10 series models. Product series do not always identify the architecture, so we ask contributors to record their exact card and setup.
+Our starting focus is older NVIDIA GeForce hardware on Windows: Kepler-based GTX 600/700 models, Maxwell-based GTX 900 models, Pascal-based GeForce GTX 10 series models and Turing-based GeForce GTX 16 series models. Product series do not always identify the architecture, so we ask contributors to record their exact card and setup.
 
 We are currently forming the community and gathering hardware information, experience and reproducible compatibility reports. Contributors will help assess possible directions and choose a first achievable technical objective. There are no GRELECY drivers, patches or supported software releases available at this stage.
 
@@ -50,7 +50,7 @@ Introduce yourself: https://github.com/FaipL/Grelecy/issues/new?template=01-join
 
 Une carte graphique fonctionnelle peut encore être utile lorsque les exigences logicielles évoluent. GRELECY est une initiative indépendante qui rassemble les propriétaires de ce matériel et les personnes souhaitant en comprendre les limites, documenter les problèmes et explorer des pistes concrètes pour prolonger son utilisation.
 
-Notre point de départ : les anciennes NVIDIA GeForce sous Windows, avec les modèles GTX 600/700 fondés sur Kepler, les GTX 900 fondées sur Maxwell et les GeForce GTX série 10 fondées sur Pascal. Une série commerciale ne désigne pas toujours une architecture : nous demandons donc aux participants de préciser leur modèle et leur configuration.
+Notre point de départ : les anciennes NVIDIA GeForce sous Windows, avec les modèles GTX 600/700 fondés sur Kepler, les GTX 900 fondées sur Maxwell, les GeForce GTX série 10 fondées sur Pascal et les GeForce GTX série 16 fondées sur Turing. Une série commerciale ne désigne pas toujours une architecture : nous demandons donc aux participants de préciser leur modèle et leur configuration.
 
 Nous constituons actuellement la communauté et recueillons les informations matérielles, les expériences et les problèmes de compatibilité reproductibles. Les contributeurs participeront à l’évaluation des pistes et au choix d’un premier objectif technique réalisable. À ce stade, aucun pilote, correctif ou logiciel pris en charge par GRELECY n’est disponible.
 
@@ -72,7 +72,7 @@ Old hardware. New possibilities.
 
 We're bringing together GPU owners, enthusiasts, testers and developers to explore how older graphics cards can remain useful on Windows.
 
-Starting focus: Kepler-based GTX 600/700, Maxwell-based GTX 900 and Pascal-based GeForce GTX 10 series cards.
+Starting focus: Kepler-based GTX 600/700, Maxwell-based GTX 900, Pascal-based GeForce GTX 10 series and Turing-based GeForce GTX 16 series cards.
 
 The community is forming now. We'll choose our technical goals together, based on the hardware, skills and evidence contributors bring.
 
@@ -89,7 +89,7 @@ Old hardware. New possibilities.
 
 Nous rassemblons propriétaires de GPU, passionnés, testeurs et développeurs pour explorer comment prolonger l’utilisation des anciennes cartes graphiques sous Windows.
 
-Point de départ : les GTX 600/700 Kepler, les GTX 900 Maxwell et les GeForce GTX série 10 Pascal.
+Point de départ : les GTX 600/700 Kepler, les GTX 900 Maxwell, les GeForce GTX série 10 Pascal et les GeForce GTX série 16 Turing.
 
 La communauté se forme maintenant. Nous choisirons ensemble les objectifs techniques à partir du matériel, des compétences et des observations des participants.
 
@@ -100,11 +100,11 @@ Initiative indépendante, sans affiliation avec NVIDIA. Aucun pilote ou correcti
 
 ## 4. Appel à volontaires — EN
 
-**Still using a Kepler, Maxwell or Pascal GeForce on Windows? Help shape GRELECY.**
+**Still using a Kepler, Maxwell or Pascal GPU, or a GeForce GTX 16 card on Windows? Help shape GRELECY.**
 
 I'm building GRELECY — Green Legacy Community — to bring together people interested in keeping older graphics hardware useful.
 
-The initial focus is Kepler-based GTX 600/700 cards, Maxwell-based GTX 900 cards and Pascal-based GeForce GTX 10 series cards. Exact models matter: not every GTX 600/700 uses Kepler.
+The initial focus is Kepler-based GTX 600/700 cards, Maxwell-based GTX 900 cards, Pascal-based GeForce GTX 10 series cards and Turing-based GeForce GTX 16 series cards. Exact models matter: not every GTX 600/700 uses Kepler.
 
 We're looking for:
 
@@ -127,11 +127,11 @@ GRELECY is independent and is not affiliated with, sponsored by or endorsed by N
 
 ## 4. Appel à volontaires — FR
 
-**Vous utilisez encore une GeForce Kepler, Maxwell ou Pascal sous Windows ? Participez à la construction de GRELECY.**
+**Vous utilisez encore une GeForce Kepler, Maxwell, Pascal ou GTX série 16 (Turing) sous Windows ? Participez à la construction de GRELECY.**
 
 Je lance GRELECY — Green Legacy Community — pour réunir les personnes qui souhaitent prolonger l’utilisation des anciennes cartes graphiques.
 
-Le périmètre initial couvre les GTX 600/700 fondées sur Kepler, les GTX 900 fondées sur Maxwell et les GeForce GTX série 10 fondées sur Pascal. Le modèle précis compte : toutes les GTX 600/700 ne sont pas des Kepler.
+Le périmètre initial couvre les GTX 600/700 fondées sur Kepler, les GTX 900 fondées sur Maxwell, les GeForce GTX série 10 fondées sur Pascal et les GeForce GTX série 16 fondées sur Turing. Le modèle précis compte : toutes les GTX 600/700 ne sont pas des Kepler.
 
 Nous recherchons :
 
@@ -159,6 +159,6 @@ GRELECY est indépendant, sans affiliation, soutien ni approbation de NVIDIA.
 - Annonce : publication générale accompagnée du visuel.
 - Appel à volontaires : sujet de forum ou publication communautaire détaillée. Vérifier les règles du lieu de publication et adapter uniquement l’introduction si nécessaire.
 - L’URL du dépôt est lisible sur le visuel ; ajouter le lien cliquable du formulaire dans le texte qui accompagne l’image.
-- Texte alternatif proposé : « GRELECY — Green Legacy Community. Old hardware. New possibilities. Appel aux propriétaires de GPU, développeurs et testeurs. Périmètre initial : GTX 600/700 Kepler, GTX 900 Maxwell et GeForce GTX série 10 Pascal sous Windows. Rejoindre le projet sur github.com/FaipL/Grelecy. Phase de formation de communauté et de recherche. Initiative indépendante de NVIDIA. »
+- Texte alternatif proposé : « GRELECY — Green Legacy Community. Old hardware. New possibilities. Appel aux propriétaires de GPU, développeurs et testeurs. Périmètre initial : GTX 600/700 Kepler, GTX 900 Maxwell, GeForce GTX série 10 Pascal et GeForce GTX série 16 Turing sous Windows. Rejoindre le projet sur github.com/FaipL/Grelecy. Phase de formation de communauté et de recherche. Initiative indépendante de NVIDIA. »
 
 Rédaction proposée pour GRELECY, d’après la documentation de GRELECY contributors, [GRELECY — Green Legacy Community](https://github.com/FaipL/Grelecy), CC BY 4.0. Modifications : adaptation en textes publics et traduction française. Les noms et visuels de marque restent distincts de cette licence, conformément à [BRANDING.md](../BRANDING.md).

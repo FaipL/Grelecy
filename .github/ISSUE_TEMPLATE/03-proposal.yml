@@ -6,8 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Help the community evaluate a concrete question about Kepler, Maxwell, or Pascal GPUs on Windows.
-        All three generations are in the initial community scope; technical priorities will be chosen together.
+        Help the community evaluate a concrete question about Kepler, Maxwell, Pascal, or GeForce GTX 16 (Turing) GPUs on Windows.
+        All four hardware groups are in the initial community scope; technical priorities will be chosen together.
         A proposal is not a delivery commitment.
   - type: textarea
     id: problem

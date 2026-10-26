@@ -32,7 +32,7 @@ La collecte s'effectue localement avec WMI, en lecture seule. Les rubriques sont
 
 Le récit saisi par l'utilisateur est distinct du relevé automatique et reste visible dans l'aperçu. Ne pas y inclure d'informations personnelles à publier involontairement. Les notes acceptent jusqu'à 4 000 caractères par zone ; le nom du logiciel, sa version et le nom de carte sont limités à 256 caractères. La date de préparation du rapport ne représente pas la date de l'essai et n'est pas présentée comme telle.
 
-Ce relevé **ne teste pas les performances, les jeux ou la compatibilité**. Il ne modifie aucun pilote et ne déduit pas automatiquement l'architecture Kepler, Maxwell ou Pascal à partir du nom commercial. Des informations peuvent manquer : cela est signalé et n'empêche pas de participer. La quantité de mémoire vidéo n'est pas relevée, car les informations WMI correspondantes peuvent être inexactes.
+Ce relevé **ne teste pas les performances, les jeux ou la compatibilité**. Il ne modifie aucun pilote et ne déduit pas automatiquement l'architecture Kepler, Maxwell, Pascal ou Turing à partir du nom commercial. Des informations peuvent manquer : cela est signalé et n'empêche pas de participer. La quantité de mémoire vidéo n'est pas relevée, car les informations WMI correspondantes peuvent être inexactes.
 
 ### État du prototype et premier essai
 
