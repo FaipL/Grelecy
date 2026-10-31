@@ -35,8 +35,13 @@ def package(dotnet: str) -> None:
     executable = publish / "GRELECY-Diagnostics.exe"
     if not executable.is_file() or executable.read_bytes()[:2] != b"MZ":
         raise RuntimeError("The Windows executable was not produced")
+    # Incremental referenced-project outputs can retain old PDBs even when this
+    # publish disables symbols. Keep local source paths out of the portable pack.
+    for symbols in publish.rglob("*.pdb"):
+        symbols.unlink()
     shutil.copytree(publish, stage, dirs_exist_ok=True)
     shutil.copyfile(ROOT / "docs/DIAGNOSTICS.md", stage / "LIRE-MOI_READ-ME.md")
+    shutil.copyfile(ROOT / "docs/AUTOMATIC_GPU_TESTS.md", stage / "AUTOMATIC_GPU_TESTS.md")
     shutil.copyfile(ROOT / "LICENSE", stage / "LICENSE-GRELECY-MPL-2.0.txt")
     shutil.copyfile(ROOT / "LICENSES/CC-BY-4.0.txt", stage / "LICENSE-GUIDE-CC-BY-4.0.txt")
     shutil.copyfile(ROOT / "BRANDING.md", stage / "BRANDING.md")

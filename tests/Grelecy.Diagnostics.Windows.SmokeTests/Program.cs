@@ -25,6 +25,7 @@ internal static class Program
             Console.Error.WriteLine("FAIL: these smoke checks require Windows.");
             return 1;
         }
+        if (args.Length == 1 && args[0] == "--gpu-native-smoke") return GpuNativeSmoke.Run();
         var screenshots = ArgumentValue(args, "--screenshots");
         if (screenshots is not null) Directory.CreateDirectory(screenshots);
         // This also terminates a native modal dialog or a hung WMI call. CI must never wait indefinitely.
@@ -143,6 +144,7 @@ internal static class Program
                 await TestGuidedWithoutConfigurationAsync(form, screenshots);
                 await TestGuidedTimeoutAsync(form);
                 await TestLocalizedFormsAsync(form, screenshots);
+                await GpuTestsSmoke.RunAsync(form, Check, (window, name) => Capture(window, screenshots, name));
                 ThemeSmoke.Run(Check);
                 TestThemeScreenshots(form, screenshots);
                 uiChecksCompleted = true;
