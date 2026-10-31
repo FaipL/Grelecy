@@ -8,6 +8,10 @@ A static, bilingual presentation of GRELECY. French is at the site root and Engl
 
 The site presents **Kepler, Maxwell, Pascal, and Turing-based GeForce GTX 16 series cards** as the initial community scope on Windows. This Turing addition is specifically the GTX 16 series. Keep the shared scope list, both translations, and the [project brief](../docs/PROJECT_SCOPE.md) consistent. The list does not define a technical implementation order or guarantee support.
 
+## AI and gaming roadmap
+
+The `#roadmap` section summarizes the [research plan](../docs/AI_GAMING_ROADMAP.md) in both languages: M0–M4, priorities, prerequisites, illustrative windows and separate GTX 16 unlocker/ReBAR feasibility studies. It links to [tracking issue #5](https://github.com/FaipL/Grelecy/issues/5) and all eight execution tickets. Keep these summaries aligned with the plan. GitHub issues hold current task status; the site describes the proposed cycle and does not imply completed experiments or measured gains.
+
 ## Edit and preview
 
 From the repository root, with Python 3.12:
