@@ -51,6 +51,8 @@ jobs:
           python-version: '3.12'
       - name: Verify the graphical workflow and local Windows collection
         run: dotnet run --project tests/Grelecy.Diagnostics.Windows.SmokeTests --configuration Release -- --live-collector --screenshots artifacts/ui-smoke
+      - name: Verify isolated GPU worker and compute correctness on WARP (software, no GPU score)
+        run: dotnet run --project tests/Grelecy.Diagnostics.Windows.SmokeTests --configuration Release -- --gpu-native-smoke
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -94,6 +96,45 @@ jobs:
           } finally {
             if ($program.Id -and -not $program.HasExited) { $program.Kill() }
             $program.Dispose()
+          }
+      - name: Verify the packaged single-file GPU worker on WARP (no GPU score)
+        shell: pwsh
+        run: |
+          $workerPath = (Resolve-Path artifacts/publish/win-x64/GRELECY-Diagnostics.exe).Path
+          $worker = [System.Diagnostics.Process]::new()
+          $worker.StartInfo = [System.Diagnostics.ProcessStartInfo]::new($workerPath)
+          $worker.StartInfo.UseShellExecute = $false
+          $worker.StartInfo.CreateNoWindow = $true
+          $worker.StartInfo.RedirectStandardInput = $true
+          $worker.StartInfo.RedirectStandardOutput = $true
+          $worker.StartInfo.RedirectStandardError = $true
+          $worker.StartInfo.ArgumentList.Add('--gpu-worker')
+          $started = $false
+          try {
+            $started = $worker.Start()
+            if (-not $started) { throw 'The packaged GPU worker could not be started.' }
+            $output = $worker.StandardOutput.ReadToEndAsync()
+            $errors = $worker.StandardError.ReadToEndAsync()
+            $request = '{"protocol":1,"operation":"warp","adapter":{"index":-1,"name":"WARP","vendorId":0,"deviceId":0,"dedicatedVideoMemoryBytes":0,"isSoftware":true}}'
+            $worker.StandardInput.WriteLine($request)
+            $worker.StandardInput.Close()
+            if (-not $worker.WaitForExit(45000)) { throw 'The packaged GPU worker exceeded its deadline.' }
+            if ($worker.ExitCode -ne 0) { throw 'The packaged GPU worker did not complete successfully.' }
+            $result = $output.GetAwaiter().GetResult() | ConvertFrom-Json
+            $null = $errors.GetAwaiter().GetResult()
+            if ($result.protocol -ne 1 -or $result.report.direct3D11.status -ne 'Passed' -or $result.report.computeShader.status -ne 'Passed') {
+              throw 'The packaged GPU worker did not verify its compute output.'
+            }
+            if ($result.report.adapter.isSoftware -ne $true -or $result.report.timing.status -ne 'NotRun' -or $result.report.timing.samplesMilliseconds.Count -ne 0) {
+              throw 'The packaged WARP check must remain software-only with no GPU measurement.'
+            }
+            Write-Host 'PASS: packaged WARP worker; physical GPU performance was not tested.'
+          } finally {
+            if ($started -and -not $worker.HasExited) {
+              $worker.Kill($true)
+              $null = $worker.WaitForExit(3000)
+            }
+            $worker.Dispose()
           }
       - uses: actions/upload-artifact@v4
         with:

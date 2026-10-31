@@ -29,6 +29,7 @@ public sealed class MainForm : Form
     private readonly Button join = MakeButton("join");
     private readonly Button problem = MakeButton("problem");
     private readonly Button working = MakeButton("working");
+    private readonly Button gpuTests = MakeButton("gpuTests");
     private readonly ProgressBar progress = new() { Name = "progress", Width = 130, Height = 24, Style = ProgressBarStyle.Marquee, Visible = false };
     private readonly TextBox preview = new()
     {
@@ -90,7 +91,7 @@ public sealed class MainForm : Form
 
         var guidedActions = MakeFlow();
         problem.Font = working.Font = new Font(Font, FontStyle.Bold);
-        guidedActions.Controls.AddRange([problem, working]);
+        guidedActions.Controls.AddRange([problem, working, gpuTests]);
         root.Controls.Add(guidedActions, 0, 2);
 
         stage.Font = new Font(Font, FontStyle.Bold);
@@ -139,6 +140,7 @@ public sealed class MainForm : Form
         join.Click += (_, _) => OpenJoinForm();
         problem.Click += (_, _) => OpenGuidedReport(ObservationKind.Problem);
         working.Click += (_, _) => OpenGuidedReport(ObservationKind.Working);
+        gpuTests.Click += (_, _) => OpenGpuTests();
         ApplyLanguage();
         Theme.Attach(this);
         Shown += (_, _) =>
@@ -208,6 +210,7 @@ public sealed class MainForm : Form
         join.Text = T("join");
         problem.Text = T("problem");
         working.Text = T("working");
+        gpuTests.Text = LocalizedText.Get("gpu.button", Language);
         shareHelp.Text = T("shareHelp");
         footer.Text = T("footer");
         preview.AccessibleName = T("previewName");
@@ -219,7 +222,7 @@ public sealed class MainForm : Form
     {
         includeIds.Enabled = includeGraphics.Checked;
         scan.Enabled = !busy;
-        problem.Enabled = working.Enabled = !busy;
+        problem.Enabled = working.Enabled = gpuTests.Enabled = !busy;
         scan.Text = T(busy ? "reading" : report is null ? "scan" : "scanAgain");
         stage.Text = T(report is null ? "stage1" : "stage2");
         SetStatus(statusKey);
@@ -343,6 +346,14 @@ public sealed class MainForm : Form
     {
         if (busy) return;
         using var dialog = new GuidedReportForm(kind, report, collect, Language, initialOptions: Options);
+        dialog.ShowDialog(this);
+        languagePicker.SelectedIndex = LanguageIndex(dialog.SelectedLanguage);
+    }
+
+    private void OpenGpuTests()
+    {
+        if (busy) return;
+        using var dialog = new GpuTestsForm(Language);
         dialog.ShowDialog(this);
         languagePicker.SelectedIndex = LanguageIndex(dialog.SelectedLanguage);
     }

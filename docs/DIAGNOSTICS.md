@@ -1,6 +1,8 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# GRELECY Diagnostics — prototype 0.3
+# GRELECY Diagnostics — prototype 0.4 (sources)
+
+The published download linked below remains **0.3.0-preview.2**. The **0.4.0-preview.1** source adds automatic GPU tests described in this guide. A source change or local build is not evidence that a new public release is available. Windows execution checks and physical-GPU acceptance are separate from compilation.
 
 ## Français
 
@@ -32,7 +34,17 @@ La collecte s'effectue localement avec WMI, en lecture seule. Les rubriques sont
 
 Le récit saisi par l'utilisateur est distinct du relevé automatique et reste visible dans l'aperçu. Ne pas y inclure d'informations personnelles à publier involontairement. Les notes acceptent jusqu'à 4 000 caractères par zone ; le nom du logiciel, sa version et le nom de carte sont limités à 256 caractères. La date de préparation du rapport ne représente pas la date de l'essai et n'est pas présentée comme telle.
 
-Ce relevé **ne teste pas les performances, les jeux ou la compatibilité**. Il ne modifie aucun pilote et ne déduit pas automatiquement l'architecture Kepler, Maxwell, Pascal ou Turing à partir du nom commercial. Des informations peuvent manquer : cela est signalé et n'empêche pas de participer. La quantité de mémoire vidéo n'est pas relevée, car les informations WMI correspondantes peuvent être inexactes.
+Ce relevé de configuration **ne teste pas les performances, les jeux ou la compatibilité**. Il ne modifie aucun pilote et ne déduit pas automatiquement l'architecture Kepler, Maxwell, Pascal ou Turing à partir du nom commercial. Des informations peuvent manquer : cela est signalé et n'empêche pas de participer. Le relevé WMI ne donne pas de quantité de mémoire vidéo, car ces valeurs peuvent être inexactes. Les nouveaux tests GPU décrits ci-dessous lisent séparément la mémoire dédiée annoncée par DXGI.
+
+### Tests automatiques GPU — nouvelle fonction des sources 0.4
+
+1. Ouvrir **Tests automatiques** depuis la fenêtre principale. Ouvrir la fenêtre ne lance aucun test.
+2. Choisir **Rechercher les cartes**, puis sélectionner explicitement la carte à tester. Sur un portable, choisir la carte voulue dans la liste ; le programme ne déduit pas celle utilisée par un jeu.
+3. Choisir **Lancer les tests**. La carte effectue un petit calcul ; fermer les jeux et applications GPU pour une comparaison plus utile. **Annuler** ou fermer la fenêtre interrompt le processus de test. Le délai global est de 45 secondes, suivi si nécessaire d'une courte attente d'arrêt du processus.
+4. Lire les résultats séparés : création Direct3D 11, calcul vérifié, sonde du pilote CUDA et durée synthétique. « Non concluant », « Non disponible » et « Non exécuté » ne sont pas des verdicts d'incompatibilité de tous les jeux ou logiciels.
+5. Choisir les informations graphiques à partager, puis copier ou enregistrer le rapport Markdown/JSON. Les identifiants PCI du modèle restent facultatifs. Aucun LUID, numéro de série, nom de compte ou chemin système brut n'est exporté.
+
+Le calcul vérifie 262 144 entiers après chaque passage mesuré. La durée provient des horloges GPU, avec trois passages de préparation puis cinq mesures ; minimum, médiane, maximum et valeurs brutes figurent dans le rapport si toutes les conditions de validité sont réunies. Il s'agit d'une charge synthétique identifiée, **pas de FPS, de tokens/seconde, de TFLOPS ou d'un test complet de stabilité**. La sonde CUDA relève l'API exposée par le pilote et la capacité de calcul de la même carte ; elle ne détecte pas un toolkit installé et ne lance aucun modèle d'IA. Voir [le protocole détaillé](AUTOMATIC_GPU_TESTS.md).
 
 ### État du prototype et premier essai
 
@@ -55,7 +67,13 @@ The app follows the Windows **application** light/dark preference, including cha
 
 Nothing is uploaded automatically, and no report data is added to browser URLs. You can contribute without collected hardware information: a failed or timed-out collection does not block a manual observation. User-entered notes are distinct from automatically read information. Review them for personal information. A successful-test statement applies only to the scenario described. Report preparation time is not presented as the time of the test.
 
-The tool reads Windows edition/version/build/architecture, graphics card names and Windows driver versions using local, read-only WMI queries. Model-level PCI identifiers are optional in exports. It does not retain account names, PC names, serial numbers, full PNP instance paths or raw system errors in the report. There is no telemetry or automatic upload. It does not measure performance or compatibility, change drivers, infer GPU architectures or report potentially misleading WMI video-memory values.
+The configuration report reads Windows edition/version/build/architecture, graphics card names and Windows driver versions using local, read-only WMI queries. Model-level PCI identifiers are optional in exports. It does not retain account names, PC names, serial numbers, full PNP instance paths or raw system errors in the report. There is no telemetry or automatic upload. That configuration report does not measure performance or compatibility, change drivers, infer GPU architectures or report potentially misleading WMI video-memory values.
+
+### Automatic GPU tests — new in the 0.4 source
+
+Open **Automatic tests**, explicitly enumerate and select an adapter, then start the tests. Opening the window alone does no work. The isolated worker checks Direct3D 11 device creation, executes and verifies a fixed integer compute workload, collects five GPU timestamp samples after three warm-ups, and probes the CUDA driver API on the matching NVIDIA adapter. The test can load the GPU briefly; close other GPU applications for a more useful comparison. Cancel or close the window to stop it. The worker has a 45-second deadline, followed if needed by a bounded process-exit wait.
+
+Review the separate outcomes and optional graphics/PCI details before copying or saving Markdown/JSON. Results never include adapter LUIDs, serials, account names or raw system error text. Invalid, incomplete, cancelled, timed-out or software-emulated runs cannot produce a hardware performance measurement. These are **specific API/compute checks and synthetic durations**, not game FPS, AI inference throughput, a stability certification or a universal compatibility verdict. The CUDA probe neither identifies an installed toolkit nor runs an AI model. See [the protocol and limitations](AUTOMATIC_GPU_TESTS.md).
 
 The initial package targets Windows 10/11 **x64**, with .NET included. ARM64 and 32-bit Windows are not part of this package. This prototype is unsigned; Windows may show an unknown-publisher warning. Respect Windows protections. Automated checks do not replace a real PC usability/collection test. A signed public release and stable support remain future work.
 
@@ -72,6 +90,7 @@ On Windows, also run the UI smoke checks and launch the application:
 
 ```sh
 dotnet run --project tests/Grelecy.Diagnostics.Windows.SmokeTests --configuration Release
+dotnet run --project tests/Grelecy.Diagnostics.Windows.SmokeTests --configuration Release -- --gpu-native-smoke
 dotnet run --project src/Grelecy.Diagnostics.Windows --configuration Release
 ```
 
@@ -88,6 +107,8 @@ Output: `artifacts/GRELECY-Diagnostics-<version>-win-x64.zip` and its SHA-256 fi
 Preview publication is a separate maintainer action: dispatch **Windows diagnostics** from `main` with `publish_preview` enabled. Both test jobs and the packaged executable checks must succeed. The publishing job verifies the checksum, uploads to a draft release, checks the attached asset names and sizes, then publishes it as a prerelease. Only that job has `contents: write`; pull requests and ordinary builds cannot publish. Existing tags or releases are never replaced automatically.
 
 Configuration-only JSON retains schema version 1. Guided reports use schema version 2 with a `user_reported` observation, a report `createdAt` time, and an optional nested, filtered configuration using schema 1. A missing configuration is `null`, with no invented collection timestamp. There is no global `compatible` or `supported` verdict. The application does not maintain or publish a compatibility database.
+
+Automatic GPU reports have their own `reportType: automatic_gpu_tests`, `schemaVersion: 1` and `testVersion: 1`. They do not change either existing report schema or turn a user's statement into an automatic observation. The Windows native smoke test executes the real HLSL/Direct3D path through the isolated worker on **WARP software rendering**; it must not be presented as a physical-GPU benchmark. CI also checks the worker in the packaged single-file executable. Neither check replaces testing Kepler, Maxwell, Pascal or GTX 16 hardware.
 
 ### Localization and appearance
 
@@ -110,5 +131,8 @@ Appearance reads the Windows application preference without modifying it and rea
 - Navigate by keyboard only (Tab, Shift+Tab, Space and button shortcuts). Check Narrator announces results/errors, high contrast, a small screen and 150–200% display scaling.
 - Check partial/unavailable WMI results and retry behavior. A long-running WMI query must not freeze the UI or start duplicate background scans. Closing the window should always work.
 - Open the GitHub form separately and verify that no report content was added to the URL or submitted automatically.
+- Open automatic tests and verify that no work starts before explicitly requesting it. Select the intended GPU, including on a hybrid laptop, and compare DXGI memory and CUDA capability with a trusted reference for that exact card.
+- Run the fixed workload twice under comparable conditions; verify all five samples are present only after a correct readback. Record variation instead of interpreting a small difference as an optimization gain.
+- Cancel an active test, close its window during a test, and test absent/older CUDA drivers. Verify the interface remains usable, no late score appears, and the worker exits. Check the new screen with keyboard navigation, high contrast, Arabic and display scaling.
 
 Record the actual Windows build, GPU and observed results. Mark untested checks explicitly; do not replace them with the automated runner's outcome.

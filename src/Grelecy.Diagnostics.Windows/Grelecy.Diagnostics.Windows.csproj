@@ -12,9 +12,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets/grelecy.ico</ApplicationIcon>
     <AssemblyName>GRELECY-Diagnostics</AssemblyName>
-    <Version>0.3.0-preview.2</Version>
+    <Version>0.4.0-preview.1</Version>
     <Product>GRELECY Diagnostics</Product>
-    <Description>Local configuration reports for the GRELECY community</Description>
+    <Description>Local configuration reports and bounded GPU tests for the GRELECY community</Description>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../Grelecy.Diagnostics.Core/Grelecy.Diagnostics.Core.csproj" />

@@ -348,13 +348,14 @@ var tests = new (string Name, Action Body)[]
     })
 };
 
+var allTests = tests.Concat(GpuReportTests.All).ToArray();
 var failures = 0;
-foreach (var (name, body) in tests)
+foreach (var (name, body) in allTests)
 {
     try { body(); Console.WriteLine($"PASS: {name}"); }
     catch (Exception exception) { failures++; Console.Error.WriteLine($"FAIL: {name}: {exception.Message}"); }
 }
-Console.WriteLine($"{tests.Length - failures}/{tests.Length} tests passed");
+Console.WriteLine($"{allTests.Length - failures}/{allTests.Length} tests passed");
 return failures == 0 ? 0 : 1;
 
 static DiagnosticReport Sample(PciIdentity? pci) => new(DateTimeOffset.UnixEpoch,
