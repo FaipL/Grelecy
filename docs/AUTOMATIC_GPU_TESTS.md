@@ -2,7 +2,7 @@
 
 # Automatic GPU tests — protocol 1
 
-This document describes the implementation in the **0.4.0-preview.1 source**. It is not a claim of a published release, a measured improvement, or validation on any particular GTX card. GRELECY's research scope remains Kepler, Maxwell, Pascal and GTX 16 Turing, with Windows first.
+This document describes the implementation in **0.4.0-preview.1**. It does not claim a measured improvement or validation on any particular GTX card. GRELECY's research scope remains Kepler, Maxwell, Pascal and GTX 16 Turing, with Windows first.
 
 ## What the first version establishes
 
