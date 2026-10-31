@@ -2,7 +2,7 @@
 
 # GRELECY — Current project scope / Périmètre actuel
 
-Updated / Mis à jour : **2026-10-26**.
+Updated / Mis à jour : **2026-10-31**.
 
 ## English
 
@@ -26,6 +26,8 @@ A GTX 1060 Pascal is available to the project initiator for tests and now falls 
 ### Stage and method
 
 The project is forming its community and gathering hardware information, research, and reproducible problems. Technical goals will be chosen collectively from the evidence, hardware, and skills available. The order in the table is not a development priority or release plan.
+
+The [AI and gaming research roadmap](AI_GAMING_ROADMAP.md) proposes bounded experiments within this scope, starting with the available GTX 1060 and expanding according to hardware and contributor availability. Its gates guide evidence collection; they do not change community membership, establish support or commit to release dates. Firmware feasibility reviews remain separate from software experiments.
 
 GRELECY does not currently provide drivers, patches, or supported software releases. Inclusion in the community scope does not promise new drivers, performance improvements, API support, security fixes, or compatibility for an individual GPU.
 
@@ -54,6 +56,8 @@ Une GTX 1060 Pascal est disponible auprès de l’initiateur du projet pour les 
 
 Le projet est en phase de constitution de communauté, de recherche et de collecte des configurations et problèmes reproductibles. Les objectifs techniques seront choisis collectivement en fonction des observations, du matériel et des compétences disponibles. L’ordre du tableau ne définit ni priorité de développement ni calendrier de livraison.
 
+La [roadmap de recherche IA et jeux vidéo](AI_GAMING_ROADMAP.md) propose des expériences limitées dans ce périmètre, en commençant par la GTX 1060 disponible puis selon le matériel et les volontaires réunis. Ses étapes organisent la collecte de preuves sans modifier l’accueil dans la communauté, garantir une prise en charge ou engager des dates de livraison. Les études de faisabilité du firmware restent distinctes des essais logiciels.
+
 Aucun pilote, correctif ou logiciel pris en charge par GRELECY n’est actuellement disponible. L’inclusion d’un GPU dans le périmètre ne garantit pas de nouveau pilote, de gain de performance, de nouvelles API, de correctif de sécurité ou de compatibilité pour cette carte.
 
 ### Référence pour les instructions du projet
@@ -71,6 +75,7 @@ Aucun pilote, correctif ou logiciel pris en charge par GRELECY n’est actuellem
 
 - [README](../README.md)
 - [Contributing](../CONTRIBUTING.md)
+- [AI and gaming research roadmap / Roadmap de recherche IA et jeux vidéo](AI_GAMING_ROADMAP.md)
 - [English and French recruitment drafts / Textes de recrutement anglais et français](RECRUITMENT.md)
 - [Website editing guide / Guide du site](../website/README.md)
 - [Brand policy / Politique de marque](../BRANDING.md)

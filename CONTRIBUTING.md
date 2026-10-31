@@ -14,6 +14,7 @@ Owners, testers, and developers interested in **Kepler, Maxwell, or Pascal** GPU
 - [Describe a compatibility issue](https://github.com/FaipL/Grelecy/issues/new?template=02-compatibility.yml).
 - [Propose a research question](https://github.com/FaipL/Grelecy/issues/new?template=03-proposal.yml).
 - Improve documentation with a focused pull request.
+- Join a bounded experiment from the [AI and gaming roadmap](docs/AI_GAMING_ROADMAP.md): hardware inventory, reproducible builds, inference, transcription, game profiles or evidence review. Follow its tracking issue for task ownership and prerequisites.
 
 Search existing issues before opening a new one. English helps keep shared research accessible internationally; French is also welcome.
 

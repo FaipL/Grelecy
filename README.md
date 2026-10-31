@@ -70,6 +70,10 @@ We will begin with people and evidence, then choose work that the community has 
 
 These are working stages, not a dated release roadmap.
 
+### AI and gaming research plan
+
+The [AI and gaming roadmap](docs/AI_GAMING_ROADMAP.md) proposes a first evidence-driven cycle: identify available hardware, reproduce compatible inference builds, evaluate a small quantized LLM and local transcription, and compare game-specific profiles and upscalers. The available GTX 1060 is the proposed first test system; other families follow the hardware and contributors available. Each work package has dependencies and acceptance criteria, with separate GTX 16 unlocker and ReBAR feasibility reviews. This is a research plan, not a claim of measured gains or a release schedule. See the linked tracking issue for current tasks.
+
 ## Get involved
 
 You do not need to write code to contribute.
