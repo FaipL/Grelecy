@@ -10,7 +10,7 @@ The site presents **Kepler, Maxwell, Pascal, and Turing-based GeForce GTX 16 ser
 
 ## AI and gaming roadmap
 
-The `#roadmap` section summarizes the [research plan](../docs/AI_GAMING_ROADMAP.md) in both languages: M0–M4, priorities, prerequisites, illustrative windows and separate GTX 16 unlocker/ReBAR feasibility studies. It links to [tracking issue #5](https://github.com/FaipL/Grelecy/issues/5) and all eight execution tickets. Keep these summaries aligned with the plan. GitHub issues hold current task status; the site describes the proposed cycle and does not imply completed experiments or measured gains.
+The `#roadmap` section summarizes the [research plan](../docs/AI_GAMING_ROADMAP.md) in both languages: M0–M4, illustrative windows and separate GTX 16 unlocker/ReBAR feasibility studies. Priorities and prerequisites are available in the detailed plan. The site links to [tracking issue #5](https://github.com/FaipL/Grelecy/issues/5) and all eight execution tickets. Keep these summaries aligned with the plan. GitHub issues hold current task status; the site describes the proposed cycle and does not imply completed experiments or measured gains.
 
 ## Edit and preview
 

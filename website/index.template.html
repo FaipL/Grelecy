@@ -104,40 +104,51 @@
     <p class="scope-note container">$scope_note</p>
 
     <section id="roadmap" class="roadmap container" aria-labelledby="roadmap-title">
-      <p class="eyebrow">$roadmap_eyebrow</p>
-      <h2 id="roadmap-title">$roadmap_title</h2>
-      <p class="roadmap-intro">$roadmap_intro</p>
-      <p class="roadmap-status" role="note">$roadmap_status</p>
+      <div class="roadmap-header">
+        <div class="roadmap-lead">
+          <p class="eyebrow">$roadmap_eyebrow</p>
+          <h2 id="roadmap-title">$roadmap_title</h2>
+          <p class="roadmap-intro">$roadmap_intro</p>
+          <p class="roadmap-context">$roadmap_context</p>
+        </div>
+        <div class="roadmap-overview" role="note">
+          <svg class="roadmap-clock" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div>
+            <h3>$roadmap_status_title</h3>
+            <p>$roadmap_status</p>
+            <a href="https://github.com/FaipL/Grelecy/issues/5">$roadmap_project_link <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </div>
+      </div>
       <ol class="roadmap-steps">
         <li>
           <span class="roadmap-phase">M0</span>
-          <div><h3>$roadmap_m0_title</h3><p>$roadmap_m0_detail</p><a href="https://github.com/FaipL/Grelecy/issues/6">$roadmap_m0_link</a></div>
-          <span class="roadmap-window">$roadmap_m0_window</span>
+          <div class="roadmap-step-copy"><h3>$roadmap_m0_title</h3><p>$roadmap_m0_detail</p></div>
+          <div class="roadmap-step-meta"><span class="roadmap-window">$roadmap_m0_window</span><div class="roadmap-links"><a href="https://github.com/FaipL/Grelecy/issues/6">$roadmap_m0_link</a></div></div>
         </li>
         <li>
           <span class="roadmap-phase">M1</span>
-          <div><h3>$roadmap_m1_title</h3><p>$roadmap_m1_detail</p><a href="https://github.com/FaipL/Grelecy/issues/7">$roadmap_m1_link</a></div>
-          <span class="roadmap-window">$roadmap_m1_window</span>
+          <div class="roadmap-step-copy"><h3>$roadmap_m1_title</h3><p>$roadmap_m1_detail</p></div>
+          <div class="roadmap-step-meta"><span class="roadmap-window">$roadmap_m1_window</span><div class="roadmap-links"><a href="https://github.com/FaipL/Grelecy/issues/7">$roadmap_m1_link</a></div></div>
         </li>
         <li>
           <span class="roadmap-phase">M2</span>
-          <div><h3>$roadmap_m2_title</h3><p>$roadmap_m2_detail</p><div class="roadmap-links"><a href="https://github.com/FaipL/Grelecy/issues/8">$roadmap_llm_link</a><a href="https://github.com/FaipL/Grelecy/issues/9">$roadmap_asr_link</a></div></div>
-          <span class="roadmap-window">$roadmap_m2_window</span>
+          <div class="roadmap-step-copy"><h3>$roadmap_m2_title</h3><p>$roadmap_m2_detail</p></div>
+          <div class="roadmap-step-meta"><span class="roadmap-window">$roadmap_m2_window</span><div class="roadmap-links"><a href="https://github.com/FaipL/Grelecy/issues/8">$roadmap_llm_link</a><a href="https://github.com/FaipL/Grelecy/issues/9">$roadmap_asr_link</a></div></div>
         </li>
         <li>
           <span class="roadmap-phase">M3</span>
-          <div><h3>$roadmap_m3_title</h3><p>$roadmap_m3_detail</p><a href="https://github.com/FaipL/Grelecy/issues/10">$roadmap_m3_link</a></div>
-          <span class="roadmap-window">$roadmap_m3_window</span>
+          <div class="roadmap-step-copy"><h3>$roadmap_m3_title</h3><p>$roadmap_m3_detail</p></div>
+          <div class="roadmap-step-meta"><span class="roadmap-window">$roadmap_m3_window</span><div class="roadmap-links"><a href="https://github.com/FaipL/Grelecy/issues/10">$roadmap_m3_link</a></div></div>
         </li>
         <li>
           <span class="roadmap-phase">M4</span>
-          <div><h3>$roadmap_m4_title</h3><p>$roadmap_m4_detail</p><a href="https://github.com/FaipL/Grelecy/issues/11">$roadmap_m4_link</a></div>
-          <span class="roadmap-window">$roadmap_m4_window</span>
+          <div class="roadmap-step-copy"><h3>$roadmap_m4_title</h3><p>$roadmap_m4_detail</p></div>
+          <div class="roadmap-step-meta"><span class="roadmap-window">$roadmap_m4_window</span><div class="roadmap-links"><a href="https://github.com/FaipL/Grelecy/issues/11">$roadmap_m4_link</a></div></div>
         </li>
       </ol>
       <aside class="roadmap-lab" aria-labelledby="roadmap-lab-title">
-        <h3 id="roadmap-lab-title">$roadmap_lab_title</h3>
-        <p>$roadmap_lab_detail</p>
+        <div><h3 id="roadmap-lab-title">$roadmap_lab_title</h3><p>$roadmap_lab_detail</p></div>
         <div class="roadmap-links"><a href="https://github.com/FaipL/Grelecy/issues/12">$roadmap_unlocker_link</a><a href="https://github.com/FaipL/Grelecy/issues/13">$roadmap_rebar_link</a></div>
       </aside>
       <div class="roadmap-actions">
